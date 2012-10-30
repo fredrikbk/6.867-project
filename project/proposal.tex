@@ -29,14 +29,13 @@ It will be decided later when we know more about the available options.
 Our end goal is a bag predictor that can predict the Dow Jones performance with good accuracy.
 In addition we will apply decision theory to the probabilistic technique to evaluate whether hedging is beneficial under several gain/loss models.
 
-\section{Project Components}
-
+\section{Tasks}
+We propose to complete the following tasks.
 
 \subsection{Feature Selection}
 Feature selection for Naive Bayes is straight forward: each word is a feature.
 However, for the SVM and probabilistic models it is not obvious.
 Making each word a feature yields very high dimensionality with only two possible values in each dimension.
-
 We will therefore explore alternative features as well as dimensionality reduction techniques to yield a lower dimension space.
 
 The first idea we have is tagging words and making the feature vectors be counts of the tags. 
@@ -45,7 +44,7 @@ Tagging positive words such as ``bull'' and ``buy'' separately from negative wor
 A more complicated idea is to do some kind of latent semantic analysis~\footnote{http://en.wikipedia.org/wiki/Latent\_semantic\_analysis} with Singular Value Decomposition or Principle Components Analysis. We believe that this kind of pre-processing would be easy to implement in Matlab.
 
 \subsection{Implementations}
-
+We plan to implement each part of our project as opposed to using off the shelf software. We already have 
 
 \subsection{Experiments}
 
