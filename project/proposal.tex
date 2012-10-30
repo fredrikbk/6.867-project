@@ -31,7 +31,6 @@ In addition we will apply decision theory to the probabilistic technique to eval
 
 \section{Tasks}
 We propose to complete the following tasks.
-
 \subsection{Feature Selection}
 Feature selection for Naive Bayes is straight forward: each word is a feature.
 However, for the SVM and probabilistic models it is not obvious.
@@ -39,15 +38,49 @@ Making each word a feature yields very high dimensionality with only two possibl
 We will therefore explore alternative features as well as dimensionality reduction techniques to yield a lower dimension space.
 
 \subsection{Implementations}
-We plan to implement each part of our project as opposed to using off the shelf software. We already have 
+We plan to implement each part of our project ourselves using only functionality available in MATLAB.
+From our second homework we already have a slack SVM implementation, which leaves us with the task of implementing Naive Bayes, dimensionality reduction, sequential learning and the third technique.
 
-\subsection{Experiments}
-
-\subsection{Evaluation}
-
+\subsection{Experiments and Evalucation}
+We will tune each model and train it on 11 of the 12 months, using the 12th month to evaluate its performance.
+We will then compare the models, explain results and provide a discussion comparing and contrasting them.
 
 \section{Milestones}
+We propose the following four milestones. For each milestone we list the tasks we plan to have completed as well as who is mainly responsible for that task.
+
+\subsection{Milestone 1: 11/11}
+
+\begin{description}
+\item[Implement and Evaluate Naive Bayes] We will implement Naive Bayes in MATLAB and evaluate it by predicting the Dow performance in each month using the other months as training data (leave-one-month-out cross validation).
+\item[SVM Feature Generation and Evaluation] We will use our existing SVM implementation to investigate feature vector options. This includes both the input representation and basis functions. Kernels will be used when possible.
+
+\end{description}
+
+Fredrik Kjolstad will be responsible for the Naive Bayes implementation and evaluation and Chris Johnson will be responsible for the SVM feature generation.
 
 
+\subsection{Milestone 2: 11/18}
+
+\begin{description}
+\item[Implement a Probabilistic Technique] We will implement a probabilistic technique for classification as mentioned earlier. This serves as another model to compare against for classification, as well as a model for addressing the decision problem in the next milestone.
+\item[Bag Predictor] We will implement a bag predictor, one which chooses between the predictors we implemented in the previous milestone to achieve higher accuracy than either of those predictors in isolation. 
+\end{description}
+
+Fredrik Kjolstad will be responsible for the probabilistic technique, and Chris Johnson will be responsible for the bag predictor.
+
+If we run out of time, we feel that this milestone plus milestone 3 would be a reasonable stopping point and our deliverable would be a comparison of three models.
+
+
+\subsection{Milestone 3: 11/25}
+\begin{description}
+\item[Decision Problem] We will apply the probabilistic model from the previous milestone to a decision problem based on this the classification problem. The decision problem is: given some initial capital, determine each day how much to buy or sell to maximize profit.
+\end{description}
+
+Chris Johnson will be responsible for obtaining the Dow data for the year we have and create a MATLAB program to run the decision problem and report results.
+Fredrik Kjolstad will be responsible for implementing a decision algorithm using the probabilistic model.
+We will both discuss the design of the decision rule and work together to test our previous results on this problem.
+
+\subsection{Milestone 4: 12/06}
+For the fourth milestone we will generate the final results and prepare the final report. Each group member is chiefly responsible for the sections corresponding to their tasks. In addition we will write shared sections together and review each others writing and results.
 
 \end{document}
