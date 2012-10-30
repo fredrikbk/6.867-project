@@ -39,6 +39,11 @@ Making each word a feature yields very high dimensionality with only two possibl
 
 We will therefore explore alternative features as well as dimensionality reduction techniques to yield a lower dimension space.
 
+The first idea we have is tagging words and making the feature vectors be counts of the tags. 
+Tagging positive words such as ``bull'' and ``buy'' separately from negative words such as ``bear,'' ``crisis,'' and ``crash'' allows us to reduce the dimensionality of the space while keeping some semantic information.
+
+A more complicated idea is to do some kind of latent semantic analysis~\footnote{http://en.wikipedia.org/wiki/Latent\_semantic\_analysis} with Singular Value Decomposition or Principle Components Analysis. We believe that this kind of pre-processing would be easy to implement in Matlab.
+
 \subsection{Implementations}
 
 
