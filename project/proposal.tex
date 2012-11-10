@@ -23,7 +23,7 @@
 We propose to examine if the News, specifically the Wall Street Journal, can predict the performance of the Dow Jones Industrial Average.
 This proposal is based on the project suggestion on the 6.867 project wiki and we will use the provided data for 2007.
 
-We propose to implement three different classification techniques to predict the Dow performance: Naive Bayes, Support Vector Machines, and a third probabilistic technique. The third technique will be a probabilistic technique and will be either logistic regression or a technique from the second half of the course.
+We propose to implement three different classification techniques to predict the Dow performance: Naive Bayes, Support Vector Machines, and a third technique. The third technique will be a probabilistic technique and will be either logistic regression or a technique from the second half of the course.
 It will be decided later when we know more about the available options.
 
 Our end goal is a bag predictor that can predict the Dow Jones performance with good accuracy.
@@ -40,11 +40,11 @@ We will therefore explore alternative features as well as dimensionality reducti
 The first idea we have is tagging words and making the feature vectors be counts of the tags. 
 Tagging positive words such as ``bull'' and ``buy'' separately from negative words such as ``bear,'' ``crisis,'' and ``crash'' allows us to reduce the dimensionality of the space while keeping some semantic information.
 
-A more complicated idea is to do some kind of latent semantic analysis\footnote{http://en.wikipedia.org/wiki/Latent\_semantic\_analysis} with Singular Value Decomposition or Principle Components Analysis. We believe that this kind of pre-processing would be easy to do using built-in Matlab functionality.
+A more complicated idea is to do some kind of latent semantic analysis\footnote{http://en.wikipedia.org/wiki/Latent\_semantic\_analysis} with Singular Value Decomposition or Principle Components Analysis. We believe that this kind of pre-processing would be easy to do using built-in MATLAB functionality.
 
 \subsection{Implementations}
 We plan to implement each part of our project ourselves using only functionality available in MATLAB.
-From our second homework we already have a slack SVM implementation, which leaves us with the task of implementing Naive Bayes, dimensionality reduction, sequential learning and the third technique.
+From our second homework we already have a slack SVM implementation, which leaves us with the task of implementing Naive Bayes, dimensionality reduction, decision testing, and a bag predictor.
 
 \subsection{Experiments and Evalucation}
 We will tune each model and train it on 11 of the 12 months, using the 12th month to evaluate its performance.
