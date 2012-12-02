@@ -38,7 +38,7 @@ for name in os.listdir(rootdir):
                             dirwords[word] = dirwords[word] + 1
                         else:
                             dirwords[word] = 1
-        dirtodict[sdir] = dirwords
+        dirtodict[name] = dirwords
 
 
 
@@ -57,7 +57,8 @@ print "Writing data file"
 count = 0
 for day in days:
     daymap = dirtodict[day]
-    outlist = [day]
+    daystr = str(int(day[4:6])) + '/' + str(int(day[6:8])) + '/' + day[0:4]
+    outlist = [daystr]
     if count % (len(days)/50) == 0:
         print "%.2f%% done" % (float(count)/len(days) * 100)
     count += 1
