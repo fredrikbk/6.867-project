@@ -37,8 +37,12 @@ end
 
 clear words
 clear D
-clear test_counts
+clear norwegian_examples
+clear english_examples
+clear examples
 clear theta
-clear norwegian
+clear norwegian_theta
+clear english_theta
 clear english
+clear norwegian
 clear prediction
