@@ -5,17 +5,23 @@ import string
 
 
 if len(sys.argv) < 3:
-    print "Usage: %s <directory> <output prefix>\nCompile word frequencies for .txt files \nin each directory under given root" % (sys.argv[0])
+    print "Usage: %s <directory> <output prefix> [cutoff]\nCompile word frequencies for .txt files \nin each directory under given root" % (sys.argv[0])
     exit(1)
 
 rootdir = sys.argv[1]
 outprefix = sys.argv[2]
+
+if len(sys.argv) >= 4:
+    cutoff = int(sys.argv[3])
+else:
+    cutoff = 1
 
 commonwords = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us'] 
 
 
 allwords = set()
 dirtodict = dict()
+wordcounts = dict()
 
 
 
@@ -35,9 +41,13 @@ for name in os.listdir(rootdir):
                         # Iterate over all words in each file under the directory
                         allwords.add(word)
                         if word in dirwords:
-                            dirwords[word] = dirwords[word] + 1
+                            dirwords[word] += 1
                         else:
                             dirwords[word] = 1
+                        if word in wordcounts:
+                            wordcounts[word] += 1
+                        else:
+                            wordcounts[word] = 1
         dirtodict[name] = dirwords
 
 
@@ -48,34 +58,16 @@ days = sorted(dirtodict.iterkeys())
 
 sortedwords = sorted(allwords)
 
-allwordmap = dict()
+# Filter out words that do not pass cutoff
+print "Filtering words"
+sortedwords = filter(lambda x: wordcounts[x] >= cutoff, sortedwords)
 
+
+
+# Write remaining words to data file
 datafile = open(outprefix + '.txt', 'w')
 wordfile = open(outprefix + '.counts', 'w')
 
-
-print "Compiling word frequencies"
-
-# Compile overall frequencies for all words
-for day in days:
-    daymap = dirtodict[day]
-    for word in sortedwords:
-        val = 0
-        if word in daymap:
-            val = daymap[word]
-        if word in allwordmap:
-            allwordmap[word] = allwordmap[word] + val
-        else:
-            allwordmap[word] = val
-
-
-print "Filtering words"
-
-# Filter out words that do not pass cutoff
-cutoff = 10
-sortedwords = filter(lambda x: allwordmap[x] >= cutoff, sortedwords)
-
-# Write remaining words to data file
 print "Writing data file"
 count = 0
 for day in days:
@@ -99,7 +91,7 @@ datafile.close()
 print "Writing word counts"
 
 for word in sortedwords:
-    wordfile.write(word + ' ' + str(allwordmap[word]) + "\n")
+    wordfile.write(word + ' ' + str(wordcounts[word]) + "\n")
 
 wordfile.close()
 
