@@ -53,6 +53,29 @@ allwordmap = dict()
 datafile = open(outprefix + '.txt', 'w')
 wordfile = open(outprefix + '.counts', 'w')
 
+
+print "Compiling word frequencies"
+
+# Compile overall frequencies for all words
+for day in days:
+    daymap = dirtodict[day]
+    for word in sortedwords:
+        val = 0
+        if word in daymap:
+            val = daymap[word]
+        if word in allwordmap:
+            allwordmap[word] = allwordmap[word] + val
+        else:
+            allwordmap[word] = val
+
+
+print "Filtering words"
+
+# Filter out words that do not pass cutoff
+cutoff = 10
+sortedwords = filter(lambda x: allwordmap[x] >= cutoff, sortedwords)
+
+# Write remaining words to data file
 print "Writing data file"
 count = 0
 for day in days:
@@ -66,10 +89,6 @@ for day in days:
         val = 0
         if word in daymap:
             val = daymap[word]
-        if word in allwordmap:
-            allwordmap[word] = allwordmap[word] + val
-        else:
-            allwordmap[word] = val
         outlist.append(str(val))
 
     outstring = ' '.join(outlist) + "\n"
