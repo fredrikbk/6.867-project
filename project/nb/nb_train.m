@@ -7,13 +7,9 @@ function [ theta ] = nb_train( examples )
     for c=1:K
         theta{c} = zeros(1,D);
         num_yc = examples{c}.num_training_vectors;
-        nz_idx = find(examples{c}.training_vector_sums);
-        for tmp=1:length(nz_idx)
-            j = nz_idx(tmp);
+        for j=1:length(examples{c}.training_vector_sums)
             num_xj1_yc = examples{c}.training_vector_sums(j);
             theta{c}(j) = (num_xj1_yc + 1) / (num_yc + 2);
         end
-        
-        theta{c}(theta{c} == 0) = 1 / (num_yc + 2);
     end
 end
