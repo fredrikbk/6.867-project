@@ -34,7 +34,7 @@ class1(class1 > 1) = 1;
 class1 = full(sum(class1, 1))';
 
 
-lookback = 10;
+lookback = 2;
 numR = length(sparseX(:,1));
 numC = length(sparseX(1,:));
 sparseAugX = spalloc(numR, (lookback+1)*numC, lookback*length(find(sparseX)));
