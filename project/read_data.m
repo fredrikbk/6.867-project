@@ -19,16 +19,16 @@ for i=1:length(labels.textdata)
     end
 end
 
-sparseX = sparse(words.data(indices, :));
+X = sparse(words.data(indices, :));
 Y = labels.data;
 Y(removelabel, :) = [];
 
-class0 = sparseX(find(Y - 1),:);
+class0 = X(find(Y - 1),:);
 count0 = length(class0(:,1));
 class0(class0 > 1) = 1;
 class0 = full(sum(class0, 1))';
 
-class1 = sparseX(find(Y + 1),:);
+class1 = X(find(Y + 1),:);
 count1 = length(class1(:,1));
 class1(class1 > 1) = 1;
 class1 = full(sum(class1, 1))';
@@ -37,6 +37,7 @@ examples = cell(2);
 examples{1} = create_nbtrain_struct(class0, count0);
 examples{2} = create_nbtrain_struct(class1, count1);
 
+clear words;
 clear labels;
 clear broken;
 clear removelabel;
