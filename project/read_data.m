@@ -39,3 +39,8 @@ examples{2} = create_nbtrain_struct(class1, count1);
 
 clear words;
 clear labels;
+clear broken;
+clear removelabel;
+clear i;
+clear j;
+clear indices;
