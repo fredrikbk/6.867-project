@@ -33,24 +33,10 @@ count1 = length(class1(:,1));
 class1(class1 > 1) = 1;
 class1 = full(sum(class1, 1))';
 
-
-lookback = 2;
-numR = length(sparseX(:,1));
-numC = length(sparseX(1,:));
-sparseAugX = spalloc(numR, (lookback+1)*numC, lookback*length(find(sparseX)));
-
-sparseAugX(1,1:numC) = sparseX(1,1:numC);
-for i=2:numR
-    sparseAugX(i, 1:numC) = sparseX(i,1:numC);
-    sparseAugX(i,numC+1:(lookback+1)*numC) = sparseAugX(i-1,1:(lookback)*numC);
-end
-
-
 examples = cell(2);
 examples{1} = create_nbtrain_struct(class0, count0);
 examples{2} = create_nbtrain_struct(class1, count1);
 
-clear words;
 clear labels;
 clear broken;
 clear removelabel;
