@@ -1,0 +1,66 @@
+M=1, k=10
+
+Validating on group 1/10
+Best word is: scotland (#118430). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 2/10
+Best word is: ambitions (#4028). It classified 145/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 3/10
+Best word is: medtronic (#83190). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 4/10
+Best word is: ambitions (#4028). It classified 150/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 5/10
+Best word is: tundra (#137924). It classified 151/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 6/10
+Best word is: ambitions (#4028). It classified 148/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 7/10
+Best word is: ambitions (#4028). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 8/10
+Best word is: refocus (#110271). It classified 145/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 9/10
+Best word is: refocus (#110271). It classified 145/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 10/10
+Best word is: implicit (#63150). It classified 146/225 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+The average accuracy in crossvalidation was: 49.38%
+
+accuracies =
+
+    0.5200
+    0.6000
+    0.5200
+    0.4000
+    0.3600
+    0.4800
+    0.6400
+    0.4800
+    0.4800
+    0.4583
