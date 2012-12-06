@@ -37,7 +37,7 @@ function [ stump ] = stump_train( X, Y, W )
             end
         end
         if numwrong > N/2
-            % Turns out a better predictor is s=-1
+            % Turns out s=-1 is a better predictor
             numwrong = N - numwrong;
             numwrongw = numcorrectw;
             s = -1;
@@ -50,8 +50,8 @@ function [ stump ] = stump_train( X, Y, W )
             best_s = s;
         end
         
+        % Print every 10%
         if print_percentage
-            % Print out every 10%
             if print_iter == print_stride
                 percent = percent + 10;
                 print_iter = 0;
@@ -62,6 +62,7 @@ function [ stump ] = stump_train( X, Y, W )
     end
     assert(best_d ~= 0);
     
+    % Print results
     if print_result == 1
         words = import_words;
         fprintf(1, 'Best word is: %s (#%d). It classified %d examples correctly.\n', words{best_d}, best_d, N-best_numwrong);
