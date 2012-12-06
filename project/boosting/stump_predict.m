@@ -1,7 +1,7 @@
-function [ prediction ] = stump_predict( x, d, s )
-    if x(d) > 0
-        prediction = s;
+function [ prediction ] = stump_predict( x, stump )
+    if x(stump.d) > 0
+        prediction = stump.s;
     else
-        prediction = -s;
+        prediction = -stump.s;
     end
 end
