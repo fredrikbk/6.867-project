@@ -1,4 +1,4 @@
-M = 5;
+M = 1;
 
 fprintf('M=%d\n\n', M);
 
