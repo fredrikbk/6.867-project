@@ -1,8 +1,10 @@
 N = length(Y);
 
+tic
 nb = nb_train(X, Y);
-%nb.pi = [1 1]
+toc
 
+tic
 correct = 0;
 for i=1:N
     prediction = nb_predict(X(i,:), nb);
@@ -10,6 +12,7 @@ for i=1:N
         correct = correct + 1;
     end
 end
+toc
 
 fprintf(1, '%.2f%%\n', 100*(correct / N));
 
