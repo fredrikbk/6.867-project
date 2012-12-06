@@ -18,3 +18,8 @@ for m=1:M
     fprintf(1, 'Predictor on first %d stumps got %d/%d (%.2f%%) correct\n\n', ...
             m, numcorrect, N, 100*numcorrect/N);
 end
+
+clear M N m n
+clear boosted_stumps
+clear numcorrect
+clear mfirst_boosted_stumps
