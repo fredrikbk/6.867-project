@@ -1,4 +1,4 @@
-M = 5;
+M = 10;
 k = 10;
 
 fprintf('M=%d, k=%d\n\n', M, k);
