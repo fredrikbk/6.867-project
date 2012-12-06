@@ -1,0 +1,41 @@
+>> nb_month_crossvalidation
+Validating on group 1/12
+
+Validating on group 2/12
+
+Validating on group 3/12
+
+Validating on group 4/12
+
+Validating on group 5/12
+
+Validating on group 6/12
+
+Validating on group 7/12
+
+Validating on group 8/12
+
+Validating on group 9/12
+
+Validating on group 10/12
+
+Validating on group 11/12
+
+Validating on group 12/12
+
+The average accuracy in crossvalidation was: 57.76%
+
+accuracies =
+
+    0.6000
+    0.5263
+    0.5909
+    0.8500
+    0.6364
+    0.4762
+    0.6190
+    0.4783
+    0.6316
+    0.4348
+    0.4762
+    0.6111

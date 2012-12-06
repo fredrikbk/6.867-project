@@ -1,0 +1,37 @@
+>> nb_kfold_crossvalidation
+k=10
+
+Validating on group 1/10
+
+Validating on group 2/10
+
+Validating on group 3/10
+
+Validating on group 4/10
+
+Validating on group 5/10
+
+Validating on group 6/10
+
+Validating on group 7/10
+
+Validating on group 8/10
+
+Validating on group 9/10
+
+Validating on group 10/10
+
+The average accuracy in crossvalidation was: 57.47%
+
+accuracies =
+
+    0.4400
+    0.6000
+    0.5200
+    0.4800
+    0.6800
+    0.5200
+    0.4800
+    0.7200
+    0.6400
+    0.6667
