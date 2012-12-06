@@ -21,15 +21,7 @@ function [avg_accuracy, accuracies, formated_string] = crossvalidation( trainer,
         end
 
         context = trainer(X(tidxs,:), Y(tidxs));
-        
-        numcorrect = 0;
-        for i=1:length(vidxs)
-            vidx = vidxs(i);
-            if predictor(X(vidx,:), context) == Y(vidx)
-                numcorrect = numcorrect + 1;
-            end
-        end
-        accuracies(g) = numcorrect / length(vidxs);
+        accuracies(g) = validate(@(x) predictor(x,context), X(vidxs,:), Y(vidxs));
 
         if print_debug
             fprintf('\n');
