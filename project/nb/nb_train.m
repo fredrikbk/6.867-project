@@ -1,11 +1,17 @@
-function [ theta ] = nb_train( X, Y )
+function [ theta, pi ] = nb_train( X, Y )
     classes = classify_data(X, Y);
 
-    assert(length(classes{1}.class) == length(classes{2}.class));
     K = length(classes);
     D = length(classes{1}.class);
     
-    theta = cell(K);
+    % pi
+    pi = zeros(1,K);
+    for c=1:K
+        pi(c) = classes{c}.count/length(Y);
+    end
+    
+    % theta
+    theta = cell(1,K);
     for c=1:K
         theta{c} = zeros(1,D);
         num_yc = classes{c}.count;
