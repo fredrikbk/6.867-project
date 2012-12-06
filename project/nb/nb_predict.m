@@ -6,7 +6,8 @@ function [ prediction ] = nb_predict( X, theta, pi )
     for c=1:K
         for j=1:D
             t_cj = theta{c}(j);
-            pr_xj = (X(j)*log(t_cj) + (1 - X(j))*log(1-t_cj));
+            xj = X(j) > 0;
+            pr_xj = (xj*log(t_cj) + (1 - xj)*log(1-t_cj));
             pr_cj = pr_xj + log(pi(c));
             pr(c) = pr(c) + pr_cj;
         end
