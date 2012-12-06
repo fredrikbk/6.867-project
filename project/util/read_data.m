@@ -27,6 +27,8 @@ for i=1:length(dates)
     month = str2num(strtok(dates{i},'/'));
     months{month} = [months{month} i];
 end
+december = months(12);
+months(12) = [];
 
 X = sparse(words.data(indices, :));
 Y = labels.data;
