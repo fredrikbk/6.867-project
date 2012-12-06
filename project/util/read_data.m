@@ -32,22 +32,7 @@ X = sparse(words.data(indices, :));
 Y = labels.data;
 Y(removelabel, :) = [];
 
-class0 = X(find(Y - 1),:);
-count0 = length(class0(:,1));
-class0(class0 > 1) = 1;
-class0 = full(sum(class0, 1))';
-
-class1 = X(find(Y + 1),:);
-count1 = length(class1(:,1));
-class1(class1 > 1) = 1;
-class1 = full(sum(class1, 1))';
-
-classes = cell(2);
-classes{1} = create_nbtrain_struct(class0, count0);
-classes{2} = create_nbtrain_struct(class1, count1);
-
 clear i j removelabel indices broken dates month;
 clear words;
-clear class0 count0 class1 count1;
 clear labels;
 clear removelabel;
