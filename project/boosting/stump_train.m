@@ -65,7 +65,7 @@ function [ stump ] = stump_train( X, Y, W )
     % Print results
     if print_result == 1
         words = import_words;
-        fprintf(1, 'Best word is: %s (#%d). It classified %d examples correctly.\n', words{best_d}, best_d, N-best_numwrong);
+        fprintf(1, 'Best word is: %s (#%d). It classified %d/%d examples correctly.\n', words{best_d}, best_d, N-best_numwrong, N);
         if best_s == 1
             fprintf(1, 'If that word was present the stock market was more likely to go up\n\n');
         else
