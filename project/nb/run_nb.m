@@ -1,21 +1,20 @@
-theta = nb_train(X, Y);
+Xb = X;
+Xb(Xb>1) = 1;
+Xb = full(Xb);
 
-classes = classify_data(X, Y);
-count1 = classes{1}.count;
-count2 = classes{2}.count;
+N = length(Y);
 
-size = count1 + count2;
-pi = [count1 / size, count2 / size];
+[theta, pi] = nb_train(Xb, Y);
+%pi = [1 1]
 
 correct = 0;
-total = 0;
-for i=1:size
-    predict = nb_predict(full(X(i,:)), theta, pi);
-%    fprintf(1,'%d, %d\n',predict, Y(i));
-    correct = correct + (predict == Y(i));
-    total = total + 1;
+for i=1:N
+    prediction = nb_predict(Xb(i,:), theta, pi);
+    if prediction == Y(i)
+        correct = correct + 1;
+    end
 end
 
-fprintf(1, '%.2f%%\n', 100*(correct / total));
+fprintf(1, '%.2f%%\n', 100*(correct / N));
 
-clear theta count0 count1 size pi correct total i predict
+clear theta pi correct i Xb prediction;
