@@ -1,4 +1,7 @@
-function [ prediction ] = nb_predict( X, theta, pi )
+function [ prediction ] = nb_predict( X, nb )
+    pi = nb.pi;
+    theta = nb.theta;
+
     K = length(theta);
     D = length(theta{1});
 

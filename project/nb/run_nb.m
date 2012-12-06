@@ -1,11 +1,11 @@
 N = length(Y);
 
-[theta, pi] = nb_train(X, Y);
-pi = [1 1]
+nb = nb_train(X, Y);
+%nb.pi = [1 1]
 
 correct = 0;
 for i=1:N
-    prediction = nb_predict(X(i,:), theta, pi);
+    prediction = nb_predict(X(i,:), nb);
     if prediction == Y(i)
         correct = correct + 1;
     end
