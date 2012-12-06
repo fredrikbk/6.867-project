@@ -19,6 +19,15 @@ for i=1:length(labels.textdata)
     end
 end
 
+months = cell(1,12);
+dates = labels.rowheaders;
+dates(removelabel, :) = [];
+
+for i=1:length(dates)
+    month = str2num(strtok(dates{i},'/'));
+    months{month} = [months{month} i];
+end
+
 X = sparse(words.data(indices, :));
 Y = labels.data;
 Y(removelabel, :) = [];
@@ -33,14 +42,12 @@ count1 = length(class1(:,1));
 class1(class1 > 1) = 1;
 class1 = full(sum(class1, 1))';
 
-examples = cell(2);
-examples{1} = create_nbtrain_struct(class0, count0);
-examples{2} = create_nbtrain_struct(class1, count1);
+classes = cell(2);
+classes{1} = create_nbtrain_struct(class0, count0);
+classes{2} = create_nbtrain_struct(class1, count1);
 
+clear i j removelabel indices broken dates month;
 clear words;
+clear class0 count0 class1 count1;
 clear labels;
-clear broken;
 clear removelabel;
-clear i;
-clear j;
-clear indices;
