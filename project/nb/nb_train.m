@@ -1,6 +1,8 @@
 function [ theta, pi ] = nb_train( X, Y )
-    classes = classify_data(X, Y);
+    X(X>1) = 1;
 
+    classes = classify_data(X, Y);
+    
     K = length(classes);
     D = length(classes{1}.class);
     

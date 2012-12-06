@@ -12,6 +12,7 @@ function [ classes ] = classify_data( X, Y )
     classes = cell(2);
     classes{1} = create_class(class1, count1);
     classes{2} = create_class(class2, count2);
+    assert(length(classes{1}.class) == length(classes{2}.class));
 end 
 
 function [ class_struct ] = create_class( class, count )
