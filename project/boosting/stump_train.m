@@ -14,7 +14,7 @@ function [ stump ] = stump_train( X, Y, W )
     print_iter = 1;
     percent = 0;
     
-    % Find the dimension to separate in that best classifies the data
+    % Find the dimension that best classifies the data
     best_numwrongw = N+1;
     best_numwrong = N+1;
     best_d = 0;
