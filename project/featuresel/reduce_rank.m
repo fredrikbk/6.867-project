@@ -1,12 +1,17 @@
 function [ outcell, outputX ] = reduce_rank( sparseX, rank )
 
 % Initialize with counts
-outputX = sparseX';
+outputX = sparseX;
 
 % Log
     %outputX = sparse(arrayfun(@(x) log(x+1), full(sparseX)));
 % Boolean
     %outputX(outputX > 0) = 1;
+
+outputX = memory_data(outputX, 6);
+    
+outputX = outputX';
+    
 % Log Entropy (currently will take about 6 days for compile cutoff=500)
 
 %temp = sparse(length(outputX(:,1)), length(outputX(1,:)));
@@ -24,7 +29,7 @@ outputX = sparseX';
 %    end
 %    temp(r(i),c(i)) = gr * lrc;
 %    toc
-%    i/length(r)*100
+%    i/length(r)*100face
 %end
 %outputX = temp;
 
