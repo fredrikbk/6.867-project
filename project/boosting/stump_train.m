@@ -1,5 +1,5 @@
 function [ stump ] = stump_train( X, Y, W )
-    print_percentage = 1;
+    print_percentage = 0;
     print_result = 1;
 
     N = length(X(:,1));
