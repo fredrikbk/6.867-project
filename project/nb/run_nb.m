@@ -16,3 +16,5 @@ for i=1:249
 end
 
 fprintf(1, '%.2f%%\n', 100*(correct / total));
+
+clear theta count0 count1 size pi correct total i predict
