@@ -1,187 +1,187 @@
->> experiment_adaboost_kfold_crossvalidation
+>> adaboost_kfold_crossvalidation
 M=5, k=10
 
 Validating on group 1/10
-Best word is: medtronic (#83190). It classified 144/224 examples correctly.
+Best word is: medtronic (#24424). It classified 145/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: deserved (#34000). It classified 136/224 examples correctly.
+Best word is: tycoon (#40876). It classified 136/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: prince (#105260). It classified 139/224 examples correctly.
+Best word is: chronicle (#6916). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: tycoon (#138376). It classified 134/224 examples correctly.
+Best word is: prince (#30530). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: dynasty (#38697). It classified 136/224 examples correctly.
-If that word was present the stock market was more likely to go down
+Best word is: motorolas (#25671). It classified 124/224 examples correctly.
+If that word was present the stock market was more likely to go up
 
 
 Validating on group 2/10
-Best word is: tundra (#137924). It classified 146/224 examples correctly.
+Best word is: tundra (#40752). It classified 142/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: deserved (#34000). It classified 134/224 examples correctly.
+Best word is: deserved (#10438). It classified 135/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: simpler (#122531). It classified 141/224 examples correctly.
+Best word is: remark (#32558). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: scotland (#118430). It classified 145/224 examples correctly.
+Best word is: tycoon (#40876). It classified 137/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: entice (#41477). It classified 128/224 examples correctly.
+Best word is: cat (#6107). It classified 134/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
 
 Validating on group 3/10
-Best word is: scotland (#118430). It classified 148/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: cat (#21210). It classified 136/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: fitness (#46498). It classified 138/224 examples correctly.
+Best word is: tundra (#40752). It classified 149/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: ambitions (#4028). It classified 145/224 examples correctly.
+Best word is: deserved (#10438). It classified 135/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: recess (#109561). It classified 126/224 examples correctly.
+Best word is: outdoor (#27875). It classified 144/224 examples correctly.
 If that word was present the stock market was more likely to go up
+
+Best word is: messy (#24667). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: ranges (#31629). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go down
 
 
 Validating on group 4/10
-Best word is: ambitions (#4028). It classified 145/224 examples correctly.
+Best word is: ambitions (#1292). It classified 145/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: relevance (#110944). It classified 145/224 examples correctly.
+Best word is: fitness (#14633). It classified 138/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: tycoon (#138376). It classified 134/224 examples correctly.
+Best word is: implicit (#19163). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: entice (#12957). It classified 129/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: casualty (#21203). It classified 133/224 examples correctly.
-If that word was present the stock market was more likely to go down
-
-Best word is: jackets (#66681). It classified 139/224 examples correctly.
+Best word is: tundra (#40752). It classified 145/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
 
 Validating on group 5/10
-Best word is: ambitions (#4028). It classified 146/224 examples correctly.
+Best word is: ambitions (#1292). It classified 144/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: relevance (#110944). It classified 146/224 examples correctly.
+Best word is: implicit (#19163). It classified 144/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: lovers (#77969). It classified 139/224 examples correctly.
+Best word is: tycoon (#40876). It classified 133/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: coastal (#25406). It classified 138/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: lumber (#78372). It classified 141/224 examples correctly.
+Best word is: relevance (#32504). It classified 144/224 examples correctly.
 If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 133/224 examples correctly.
+If that word was present the stock market was more likely to go up
 
 
 Validating on group 6/10
-Best word is: tundra (#137924). It classified 142/224 examples correctly.
-If that word was present the stock market was more likely to go down
-
-Best word is: deserved (#34000). It classified 138/224 examples correctly.
+Best word is: ambitions (#1292). It classified 146/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: jefferies (#67394). It classified 137/224 examples correctly.
+Best word is: implicit (#19163). It classified 145/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: implicit (#63150). It classified 141/224 examples correctly.
+Best word is: soldier (#36658). It classified 129/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: contests (#27749). It classified 130/224 examples correctly.
+Best word is: lovers (#23126). It classified 133/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: violent (#42300). It classified 138/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
 
 Validating on group 7/10
-Best word is: ambitions (#4028). It classified 144/224 examples correctly.
+Best word is: ambitions (#1292). It classified 146/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: lovers (#77969). It classified 139/224 examples correctly.
+Best word is: lovers (#23126). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: violent (#143209). It classified 137/224 examples correctly.
+Best word is: australias (#2601). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: tycoon (#138376). It classified 136/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: pairs (#97739). It classified 134/224 examples correctly.
+Best word is: implicit (#19163). It classified 143/224 examples correctly.
 If that word was present the stock market was more likely to go down
+
+Best word is: entice (#12957). It classified 130/224 examples correctly.
+If that word was present the stock market was more likely to go up
 
 
 Validating on group 8/10
-Best word is: ambitions (#4028). It classified 144/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: deserved (#34000). It classified 139/224 examples correctly.
-If that word was present the stock market was more likely to go up
-
-Best word is: tundra (#137924). It classified 144/224 examples correctly.
+Best word is: tundra (#40752). It classified 147/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: entice (#41477). It classified 128/224 examples correctly.
+Best word is: deserved (#10438). It classified 134/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: dumping (#38283). It classified 136/224 examples correctly.
+Best word is: remark (#32558). It classified 141/224 examples correctly.
 If that word was present the stock market was more likely to go down
+
+Best word is: teamed (#39173). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: binding (#3936). It classified 132/224 examples correctly.
+If that word was present the stock market was more likely to go up
 
 
 Validating on group 9/10
-Best word is: ambitions (#4028). It classified 145/224 examples correctly.
+Best word is: ambitions (#1292). It classified 144/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: tundra (#137924). It classified 145/224 examples correctly.
+Best word is: tycoon (#40876). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tundra (#40752). It classified 142/224 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: entice (#41477). It classified 127/224 examples correctly.
+Best word is: entice (#12957). It classified 130/224 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: deserved (#34000). It classified 134/224 examples correctly.
+Best word is: chronicle (#6916). It classified 139/224 examples correctly.
 If that word was present the stock market was more likely to go up
-
-Best word is: guides (#55207). It classified 137/224 examples correctly.
-If that word was present the stock market was more likely to go down
 
 
 Validating on group 10/10
-Best word is: ambitions (#4028). It classified 145/225 examples correctly.
+Best word is: ambitions (#1292). It classified 144/225 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: entice (#41477). It classified 132/225 examples correctly.
+Best word is: tycoon (#40876). It classified 135/225 examples correctly.
 If that word was present the stock market was more likely to go up
 
-Best word is: tundra (#137924). It classified 143/225 examples correctly.
+Best word is: tundra (#40752). It classified 142/225 examples correctly.
 If that word was present the stock market was more likely to go down
 
-Best word is: spark (#125650). It classified 129/225 examples correctly.
-If that word was present the stock market was more likely to go down
-
-Best word is: chronicle (#23942). It classified 139/225 examples correctly.
+Best word is: deserved (#10438). It classified 136/225 examples correctly.
 If that word was present the stock market was more likely to go up
 
+Best word is: soldier (#36658). It classified 132/225 examples correctly.
+If that word was present the stock market was more likely to go down
 
-The average accuracy in crossvalidation was: 56.20%
+
+The average accuracy in crossvalidation was: 59.02%
 
 accuracies =
 
+    0.4800
+    0.6400
+    0.5600
     0.5200
-    0.6000
-    0.4400
+    0.7200
+    0.6800
+    0.5200
     0.5600
-    0.5600
-    0.5600
-    0.6000
-    0.6400
-    0.6400
-    0.5000
+    0.6800
+    0.5417

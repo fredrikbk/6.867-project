@@ -1,0 +1,337 @@
+adaboost_kfold_crossvalidation
+M=10, k=10
+
+Validating on group 1/10
+Best word is: ambitions (#1292). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: lovers (#23126). It classified 137/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: relevance (#32504). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: maintains (#23506). It classified 126/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: concluding (#8015). It classified 141/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: experimenting (#13655). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: prince (#30530). It classified 141/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tycoon (#40876). It classified 134/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: indicators (#19414). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: realistic (#31825). It classified 131/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 2/10
+Best word is: ambitions (#1292). It classified 146/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: deserved (#10438). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tundra (#40752). It classified 146/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: tycoon (#40876). It classified 130/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: guides (#17031). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: entice (#12957). It classified 126/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: audi (#2546). It classified 140/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: fitness (#14633). It classified 138/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: recess (#31974). It classified 122/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: refocus (#32237). It classified 145/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 3/10
+Best word is: tundra (#40752). It classified 150/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: simpler (#35959). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: lovers (#23126). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: chapters (#6530). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: ind (#19375). It classified 138/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: binding (#3936). It classified 130/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: brain (#4755). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: wizard (#43495). It classified 118/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: remark (#32558). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 4/10
+Best word is: tundra (#40752). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 134/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: relevance (#32504). It classified 142/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: entice (#12957). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: coastal (#7406). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: giulianis (#16253). It classified 131/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: refocus (#32237). It classified 140/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: promptly (#30783). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: concluding (#8015). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: bats (#3300). It classified 124/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 5/10
+Best word is: ambitions (#1292). It classified 145/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: entice (#12957). It classified 130/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: violent (#42300). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: lovers (#23126). It classified 134/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: soldier (#36658). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: audi (#2546). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: rbs (#31773). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: recess (#31974). It classified 124/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tundra (#40752). It classified 141/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 6/10
+Best word is: implicit (#19163). It classified 146/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: lovers (#23126). It classified 137/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: relevance (#32504). It classified 142/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: teamed (#39173). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: soldier (#36658). It classified 130/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: casualty (#6106). It classified 131/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: refocus (#32237). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: bats (#3300). It classified 121/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: ambitions (#1292). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: cite (#7044). It classified 138/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 7/10
+Best word is: ambitions (#1292). It classified 143/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: coastal (#7406). It classified 140/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tycoon (#40876). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tundra (#40752). It classified 142/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: entice (#12957). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: brain (#4755). It classified 137/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: recess (#31974). It classified 125/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: relevance (#32504). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: implicit (#19163). It classified 142/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 8/10
+Best word is: tundra (#40752). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: lovers (#23126). It classified 137/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: teamed (#39173). It classified 140/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: unraveling (#41485). It classified 140/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: tycoon (#40876). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: cat (#6107). It classified 131/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: overheated (#28037). It classified 136/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: accelerated (#190). It classified 125/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: fitness (#14633). It classified 134/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: remark (#32558). It classified 134/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+
+Validating on group 9/10
+Best word is: ambitions (#1292). It classified 147/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: lovers (#23126). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: concluding (#8015). It classified 144/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: educated (#12272). It classified 141/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: soldier (#36658). It classified 128/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: cardiologist (#5891). It classified 142/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: hispano (#18156). It classified 123/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: logs (#22975). It classified 135/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: casualty (#6106). It classified 129/224 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: deserved (#10438). It classified 139/224 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+Validating on group 10/10
+Best word is: ambitions (#1292). It classified 146/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: tundra (#40752). It classified 146/225 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: spark (#36915). It classified 129/225 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: lovers (#23126). It classified 136/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: violent (#42300). It classified 141/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: flap (#14697). It classified 124/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: prey (#30486). It classified 142/225 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: tycoon (#40876). It classified 133/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+Best word is: quadrupled (#31252). It classified 142/225 examples correctly.
+If that word was present the stock market was more likely to go down
+
+Best word is: binding (#3936). It classified 134/225 examples correctly.
+If that word was present the stock market was more likely to go up
+
+
+The average accuracy in crossvalidation was: 56.23%
+
+accuracies =
+
+    0.5600
+    0.5200
+    0.4000
+    0.5600
+    0.7600
+    0.4000
+    0.7200
+    0.6000
+    0.5200
+    0.5833
