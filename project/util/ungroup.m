@@ -1,7 +1,7 @@
-function [ output_args ] = ungroup( input_args )
-%UNGROUP Summary of this function goes here
-%   Detailed explanation goes here
-
-
+function [ indices ] = ungroup(groups)
+    indices = [];
+    for g=1:length(groups)
+        indices = [indices groups{g}];
+    end
 end
 
