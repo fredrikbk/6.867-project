@@ -21,6 +21,6 @@ function [prediction] = svm_project_predict(x, context, fn, C)
     end
 
     w0 = w0 / sum(Midx);
-    prediction = sign(sum(kern_map(x', context{2}, fn) * diag(context{1}) * diag(Y) * diag(Midx)) + w0);
+    prediction = sign(sum(kern_map(x', X, fn) * diag(alphas) * diag(Y) * diag(Midx)) + w0);
 
 end
