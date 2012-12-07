@@ -1,4 +1,4 @@
-function [avg_accuracy, accuracies, formated_string] = crossvalidation( trainer, predictor, X, Y, groups )
+function [avg_accuracy, accuracies, formated_string, proportion] = crossvalidation( trainer, predictor, X, Y, groups )
 %MONTH_CROSSVALIDATION Trains predictor on 11 months and validates on the
 %12th in a rotating manner.
 %   trainer:   function [context] = trainer(X, Y)
@@ -6,6 +6,7 @@ function [avg_accuracy, accuracies, formated_string] = crossvalidation( trainer,
 %   groups:    cell array containinig a vector of indices (into X,Y) for
 %              crossvalidation group.
     accuracies = zeros(1,length(groups));
+    proportion = zeros(1, length(groups));
     for g=1:length(groups)
         fprintf('Validating on group %d/%d\n', g, length(groups));
 
@@ -20,6 +21,8 @@ function [avg_accuracy, accuracies, formated_string] = crossvalidation( trainer,
 
         context = trainer(X(tidxs,:), Y(tidxs));
         accuracies(g) = validate(@(x) predictor(x,context), X(vidxs,:), Y(vidxs));
+        temp = Y(vidxs);
+        proportion(g) = length(temp(temp == 1))/length(temp);
 
         fprintf('\n');
     end
