@@ -1,4 +1,4 @@
-function [ avg_accuracy, accuracies, formated_string ] = kfold_crossvalidation( trainer, predictor, X, Y, k, true_random )
+function [ avg_accuracy, accuracies, formated_string, proportions ] = kfold_crossvalidation( trainer, predictor, X, Y, k, true_random )
 %KFOLD_CROSSVALIDATION Randomly partition the samples into k partitions.
 %                      Trains the predictor on k-1 samples and validates on
 %                      the 12th in a rotating manner.
@@ -17,6 +17,6 @@ function [ avg_accuracy, accuracies, formated_string ] = kfold_crossvalidation( 
     
     folds = group(idxs, k);
 
-    [avg_accuracy, accuracies, formated_string] = crossvalidation( trainer, predictor, X, Y, folds );
+    [avg_accuracy, accuracies, formated_string, proportions] = crossvalidation( trainer, predictor, X, Y, folds );
 end
 

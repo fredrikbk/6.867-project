@@ -8,7 +8,7 @@ outputX = sparseX;
 % Boolean
     %outputX(outputX > 0) = 1;
 
-outputX = memory_data(outputX, 6);
+outputX = memory_data(outputX, 10);
     
 outputX = outputX';
     
