@@ -1,4 +1,4 @@
-\documentclass[10pt]{scrartcl}
+\documentclass[10pt]{article}
 
 \usepackage{fullpage}
 \usepackage{amsmath}
@@ -14,8 +14,8 @@
 \def\TODO#1{\noindent\textbf{[TODO: #1}]}
 
 \begin{document}
-\title{Predicting the Stock Market with Newspaper Articles}
-\subtitle{6.867 Final Project}
+\title{Predicting the Stock Market with Newspaper Articles\\ (6.867 Final Project)}
+%\subtitle{6.867 Final Project}
 \author{Chris Johnson \and Fredrik Kjolstad}
 \date{December 10, 2012}
 \maketitle
@@ -26,7 +26,7 @@
 
 \section{Introduction}
 
-\section{Data and Feature Selection}
+\section{Feature Selection}
 
 Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. 
 
@@ -79,7 +79,7 @@ We will introduce the following terminology to describe the feature matrix and i
 
 \end{itemize}
 
-\paragraph{Bag of Words and Phrases}
+\subsection{Bag of Words and Phrases}
 
 The simplest feature vector is simply a ``bag of words'' for each day~\cite{featurehash}, which consists of frequency counts of all words in articles published on that day. Elements of the feature vector take the form: $$\displaystyle F_{d,i} = \sum_{A \in D_d}{A_i}$$ These feature vectors are extremely sparse, since most articles do not use tens of thousands of unique words (we represent our data set as a sparse matrix
 in MATLAB to reduce memory consumption to reasonable levels).
@@ -89,19 +89,14 @@ as well. We turn phrases into single words of the form ``word1-word2'' and ``wor
 
 Bags of words and bags of phrases form the basis of many of our other feature selection techniques, so we will call the feature matrix resulting from the use of either $B$. Since bags of phrases just increase the vocabulary size, it can be viewed as augmenting the article word lists $A$ with additional words. They bags of words or phrases may be used interchangeably, so we will refer to the resulting feature matrix for either as $B$ in the rest of this section; when we present results we will explicitly state if we build on bags of words or phrases as well as the filtering parameters used.
 
-\paragraph{Temporal Shift}
-
-The bag features $B$ associate each day's price direction in $Y$ with the same day's article counts, so we are using that feature matrix to find a correlation between the direction of the stock market and the contents of newspaper articles on day $d$ (perhaps investors read the paper in the morning and that influences their trades, or some hidden ``state of the market'' influences both). It is plausible, however, that the articles on day $d-1$ are correlated with the market direction on day $d$. It is also likely that the articles on day $d+1$ are correlated with the market direction on day $d$, since they may reflect on market performance for the previous day. This is an uninteresting predictor, but it will give us some indication of how well the techniques we apply make predictions based on data that has a clear reason for being correlated.
-
-We introduce temporally shifted feature matrices to investigate these possibilities, defined by: $$F_{d,i} = B_{d-1,i}$$ and $$F_{d,i} = B_{d+1,i}$$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
-
-\paragraph{Temporal Augmentation}
+\subsection{Temporal Features}
 
 Temporal shifting trades information about the current day for information about the previous (or next) day.
 
 %To find a correlation from this would mean one of three things: that the market is influenced by the content of the WSJ on that day (perhaps investors read the paper in the morning and this influences how they trade throughout the day), that the content of the WSJ is influenced by the market on that day (impossible, because the newspaper is released before the market opens), or that some hidden ``state of the world'' influences both the newspaper and the market. 
 
 
+\subsection{Topic Modeling}
 
  
 \TODO{Read the paper that is cited and see if implementing hashing is good, seems our assumptions are different from theirs}
@@ -111,13 +106,45 @@ Temporal shifting trades information about the current day for information about
 \TODO{Read all sources and be familiar with them for interview!}
  
 
-\section{Techniques}
+\section{Classifiers}
 \label{sec:techniques}
 
-\section{Evaluation}
+\subsection{Prediction Rules}
+\label{sec:}
+
+\subsection{AdaBoost}
+\label{sec:}
+
+\subsection{Nearest Neighbor}
+\label{sec:}
+
+\subsection{SVM}
+\label{sec:}
+
+\subsection{Naive Bayes}
+\label{sec:}
+
+\subsection{Sequential Models}
+\label{sec:}
+
+\subsubsection{Markov Models}
+\label{sec:}
+
+\subsubsection{Hidden Markov Models}
+\label{sec:}
+
+\section{Evaluation and Analysis}
+
+\subsection{Temporal Shift}
+
+The bag features $B$ associate each day's price direction in $Y$ with the same day's article counts, so we are using that feature matrix to find a correlation between the direction of the stock market and the contents of newspaper articles on day $d$ (perhaps investors read the paper in the morning and that influences their trades, or some hidden ``state of the market'' influences both). It is plausible, however, that the articles on day $d-1$ are correlated with the market direction on day $d$. It is also likely that the articles on day $d+1$ are correlated with the market direction on day $d$, since they may reflect on market performance for the previous day. This is an uninteresting predictor, but it will give us some indication of how well the techniques we apply make predictions based on data that has a clear reason for being correlated.
+
+We introduce temporally shifted feature matrices to investigate these possibilities, defined by $F_{d,i} = B_{d-1,i}$ and $F_{d,i} = B_{d+1,i}$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
+
 \begin{itemize}
 \item The word ``ambitions'' is the best indicator of the Dow Jones gaining. If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.
-\item The word ``tundra'' is the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the us and where they mention the Toyota Tundra.
+\item The word ``tundra'' is the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the us and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones).
+
 \end{itemize}
 
 \bibliographystyle{plain}
