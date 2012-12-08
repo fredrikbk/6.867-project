@@ -26,6 +26,8 @@
 
 \section{Introduction}
 
+RELATED WORK: \cite{twitter}, \cite{mlstockmarket}
+
 \section{Feature Selection}
 
 Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. 
@@ -91,10 +93,13 @@ Bags of words and bags of phrases form the basis of many of our other feature se
 
 \subsection{Temporal Features}
 
-Temporal shifting trades information about the current day for information about the previous (or next) day.
+The words and phrases from previous days may have an influence on the current day's market direction by representing trends in the market~\cite{mlstockmarket}. Building a model which takes temporal information into account may use information about these trends to make better predictions. We incorporate temporal information by augmenting our data set with data from previous days and using the resulting feature vectors for training and testing.
 
-%To find a correlation from this would mean one of three things: that the market is influenced by the content of the WSJ on that day (perhaps investors read the paper in the morning and this influences how they trade throughout the day), that the content of the WSJ is influenced by the market on that day (impossible, because the newspaper is released before the market opens), or that some hidden ``state of the world'' influences both the newspaper and the market. 
+The first method we consider is \textit{temporal concatenation} of our bag of words. The previous $L$ days features are concatenated on to the end of the current day's feature. That is, $F_{d} = B_{d} \oplus B_{d-1} \oplus ... \oplus B_{d-L}$, where ($\oplus$) represents vector concatenation, and where days before the start of our data set are assumed to have counts $0$ for all words.
 
+A major problem with this method is that it increases the length of our feature vectors by a factor of $L$, which quickly becomes intractable for large $L$. To use this method, we need to filter out more words from our initial data set which may reduce the information we have. Another problem with temporal concatenation is that it also includes information about which specific day in the past had each word. If the phrase ``market downturn'' is associated with decreases in the following week, then it doesn't matter if it appeared one or two days in the past. This observation is similar to that made in~\cite{mlstockmarket} in which the author assumes that certain articles may have an effect on the stock price that lingers for some time and then diminishes in importance. 
+
+The second method we consider, which we call \textit{temporal memory}, addresses this issue. Each feature vector is augmented with a weighted average of the frequencies of each word over the previous $L$ days. That is, $$\displaystyle F_{d} = B_{d} \oplus {{\sum^L_{i=1}{\alpha_i B_{d-i}}} \over {\sum^L_{i=1}{\alpha_i}}}$$ Again, frequencies are assumed to be 0 for days before the beginning of our data set, and we round the weighted average up to an integer. This allows us to specify the relative weights of historic data for the previous $L$ days while only doubling the size of our feature vectors. 
 
 \subsection{Topic Modeling}
 
@@ -136,6 +141,10 @@ Temporal shifting trades information about the current day for information about
 \section{Evaluation and Analysis}
 
 \subsection{Temporal Shift}
+
+
+Temporal shifting trades information about the current day for information about the previous (or next) day.
+
 
 The bag features $B$ associate each day's price direction in $Y$ with the same day's article counts, so we are using that feature matrix to find a correlation between the direction of the stock market and the contents of newspaper articles on day $d$ (perhaps investors read the paper in the morning and that influences their trades, or some hidden ``state of the market'' influences both). It is plausible, however, that the articles on day $d-1$ are correlated with the market direction on day $d$. It is also likely that the articles on day $d+1$ are correlated with the market direction on day $d$, since they may reflect on market performance for the previous day. This is an uninteresting predictor, but it will give us some indication of how well the techniques we apply make predictions based on data that has a clear reason for being correlated.
 
