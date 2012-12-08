@@ -18,15 +18,10 @@ B_guess;
          
 [A, B] = hmmtrain(E, A_guess, B_guess)
 
-pr_Z = hmmdecode(E(1:i),A,B);
-
 % Test and validate
 predictions = length(E);
 numcorrect = 0;
 for i=1:length(E)-1
-    
-    
-    
     % Compute the posterior probabilities on Z for E(1:i)
     pr_Z = hmmdecode(E(1:i),A,B)';
     
@@ -35,14 +30,14 @@ for i=1:length(E)-1
     E(i)
     pr_xip1 = pr_zip1 * B
 
-    if pr_xip1(2) > 0.5743  %pr_xip1(1)
-        %fprintf('predicted: 1. Correct: %d\n', Y(i+1));
-        if Y(i+1) == 1
+    if pr_xip1(1) >= pr_xip1(2)  %pr_xip1(1)
+        %fprintf('predicted: -1. Correct: %d\n', Y(i+1));
+        if Y(i+1) == -1
             numcorrect = numcorrect + 1;
         end
     else
-        %fprintf('predicted: -1. Correct: %d\n', Y(i+1));
-        if Y(i+1) == -1
+        %fprintf('predicted: 1. Correct: %d\n', Y(i+1));
+        if Y(i+1) == 1
             numcorrect = numcorrect + 1;
         end
     end
