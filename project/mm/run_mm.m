@@ -1,7 +1,20 @@
-theta = mm_train(Y);
+M = 2;
 
-fprintf(1, '(xt0, xt1) = (%d, %d)\n', Y(2), Y(3));
-prediction = mm_predict(Y(2), theta);
+start_of_predictions = 30;
+
+P = zeros(1,length(Y));
+
+for i=1:M
+    P(i) = 1;
+end
+
+for i=max(M+1, start_of_predictions):length(Y)
+    theta = mm_train(Y(1:i), M);
+    P(i) = mm_predict(Y(i-M:i-1), theta);
+end
+
+[num, str] = num_equals(P(start_of_predictions:end), Y(start_of_predictions:end));
+
+fprintf(str);
 
 
-fprintf(1, 'xt1 prediction = %d\n', prediction);

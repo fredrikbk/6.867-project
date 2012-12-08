@@ -1,11 +1,16 @@
-function [ xt1 ] = mm_predict( xt0, theta)
-    xt0 = normalize(xt0);
+function [ xt1 ] = mm_predict( xt, theta)
+    xt = xt';
+
+    for i=1:length(xt)
+        xt(i) = normalize(xt(i));
+    end
 
     largest = -1;
     largest_id = 0;
-    for i=1:length(theta(1,:))
-        if theta(xt0, i) > largest
-            largest = theta(xt0, i);
+    
+    for i=1:2
+        if theta(mmidx([xt, i])) > largest
+            largest = theta(mmidx([xt, i]));
             largest_id = i;
         end
     end
