@@ -15,6 +15,7 @@ for i=1:length(labels.textdata)
     end
     if ~broken
         fprintf(2, 'No WSJ for %d\n', i);
+        labels.textdata(i)
         removelabel(end+1) = i;
     end
 end
