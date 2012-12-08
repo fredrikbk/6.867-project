@@ -11,7 +11,7 @@
 \usepackage{amssymb}
 \usepackage[margin=0.82in]{geometry}
 
-\def\TODO#1{\noindent\textbf{[TODO: #1}]}
+\def\TODO#1{\noindent\textbf{[TODO:} #1]}
 
 \begin{document}
 \title{Predicting the Stock Market with Newspaper Articles\\ (6.867 Final Project)}
@@ -25,6 +25,7 @@
 \end{abstract}
 
 \section{Introduction}
+\TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
 
 \section{Feature Selection}
 
@@ -109,43 +110,76 @@ Temporal shifting trades information about the current day for information about
 \section{Classifiers}
 \label{sec:techniques}
 
-In this section we describe and briefly evaluate the different classifiers we developed for this project.
-For each classifiers we describe our implementation choices, what if any third-party libraries we used, and then we demonstrate its performance on our dataset.
+In this section we describe the different classifiers we developed for this project.
+For each classifiers we describe our implementation choices and what, if any, third-party libraries we used.
 
 Our classifiers can roughly be divided into four categories. The first are simple prediction rules. These are mostly included to demonstrate features of our data and to serve as baselines for the other classifiers. The next class include classifiers that do not have a probabilistic model. These include AdaBoost, Nearest Neighbor and SVM. The third class consist of classifiers based on probabilistic models. The only classifiers we implemented in this category is Naive Bayes. The fourth and final class of classifiers is sequential models and include M-order Markov Models and Hidden Markov Models.
-
-
-
-\subsection{Prediction Rules}
-\label{sec:prediction-rules}
-
-In order to demonstrate properties of our data and to serve as baselines for more sophisticate classifiers we experimented with three simple prediction rules.
-
-\begin{description}
-\item[Majority] The first prediction rule is simply to count the number of positive and negative days in our training data set and 
-\end{description}
-
-
-\subsection{AdaBoost}
-\label{sec:adaboost}
-
-\subsection{Nearest Neighbor}
-\label{sec:nearest-neighbor}
-
-\subsection{SVM}
-\label{sec:svm}
 
 \subsection{Naive Bayes}
 \label{sec:naive-bayes}
 
+The first classifier we implemented was Naive Bayes.
+Naive Bayes is a natural choice when the input features are discrete with very high dimensionality (such as bag of words).
+The reason for this is the naive bayes assumption, which asserts that the input features are independent.
+This means we can turn the multinomial on the full distribution, which has $O(2^D)$ parameters into $D$ binomials with $O(D)$ parameters.
+That is, $p(Y|X) \propto p(Y)p(X|Y) = p(Y)\prod_{i=1}^{D}{p(X^{(i)}|Y)}$, where $p(Y)$ is a prior on $Y$ (we will take advantage of the opportunity to put a prior on $Y$ later).
+
+Although this assumption may seem \emph{overly} naive, it has proven to work well on document classification tasks such as spam detection, which are similar to our problem.
+It is also a probabilistic model, as opposed to most of our other classifiers, which means we can combine it with temporal probabilistic models.
+
+\subsection{AdaBoost}
+\label{sec:adaboost}
+
+The next classifier we implemented was AdaBoost using decision stumps as weak learners.
+Our implementation of AdaBoost is parameterized by $M$, which denotes the number of classifiers to train.
+
+The reason why we choose AdaBoost is that we have a very large corpus of words and need classifiers that can be trained very quickly.
+Weak learners fit this bill since they can be trained in linear time in the dimensionality of the features and in the number of data points.
+However, since decision stumps are terrible classifiers we boost them with AdaBoost, which makes them quite effective classifiers.
+Moreover, in addition to serving as a efficient classifier on bags of words, AdaBoost helps us gain insight into our data set as the training picks out the words that does the best job of separating the dataset.
+
+\subsection{Nearest Neighbor}
+\label{sec:nearest-neighbor}
+
+\TODO{Chris: Write this section.}
+
+\subsection{SVM}
+\label{sec:svm}
+
+\TODO{Chris: Write this section. Say that we chose SVM's since they are probably the most popular classifiers due to their efficiency. However, we could not possible train them on the bag of words, so their usage necessitated dimensionality reduction.}
+
 \subsection{Sequential Models}
 \label{sec:sequential-models}
+
+Stock Markets are known to follow trends and previous results are an often an indication of future results.
+Therefore, we experimented with two sequential models to attempt to predict the Dow Jones based on past performance.
+
+The basic versions of these models only use the previous history of Dow Jones performance to predict future results, and ignores the issues of the Wall Street Journal.
+However, we also combined Hidden Markov models with Naive Bayes in an attempt to improve our predictions by taking more information into account.
 
 \subsubsection*{Markov Models}
 \label{sec:}
 
+We implemented M-order Markov Models for any value of M. However, since the number of model parameters grows exponentially in M, we are restricted to relatively small values of M by computational resources.
+
 \subsubsection*{Hidden Markov Models}
 \label{sec:}
+
+We also implemented a classifier for the more powerful Hidden Markov Models. An HMM assumes the observed values $Y$ are generated from a sequence of hidden states $Z$.
+The evolution of the hidden states is governed by the conditional probability distribution $p(Z_{i}|Z_{i-1})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y_{i}|Z_{i})$.
+This is depicted graphically as a Bayes Net in figure~\TODO{ref}.
+
+The HMM classifier is trained using the first $t$ values of $Y$ and then used to predict value $T_{t+1}$.
+We used the MATLAB HMM Toolkit to learn the maximum-likelihood estimation of the model parameters A (the transition matrix) and B (the emission matrix) using the hmmtrain function, which internally uses the EM algorithm.
+We then used the function hmmdecode to generate the posterior probability on state $Z_{t}$.
+We then performed standard message passing along the chain from $Z_{t}$ to $Y_{t+1}$ to evaluate the marginal $p(Y_{t+1})$, which we used to predict the next value of $Y$ (see figure~\TODO{ref}).
+
+In a variation on this approach we combined the Hidden Markov Model with Naive Bayes to make prediction both based on trends in the market and based on the articles in the Wall Street Journal.
+To do this we first evaluated the marginal $p(X_{t+1})$ as described above.
+We then trained a Naive Bayes predictor on the first $t$ (X,Y) tuples and used this to predict the value of $X_{t+1}$, using marginal $p(X_{t+1})$ from the HMM as a prior.
+That is, we combine our prior belief about which way we think the market will go based on recent performance, with the new information in the WSJ.
+This is illustrated in figure~\TODO{ref}. 
+
 
 \section{Analysis}
 
