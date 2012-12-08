@@ -1,6 +1,6 @@
-Ynorm = Y;
+% Create shuffled Y that is normalized to {1,2}
+Ynorm = Y';
 Ynorm=Ynorm(randperm(length(Ynorm)));
-
 for i=1:length(Ynorm)
     Ynorm(i) = (Ynorm(i)+3)/2;
 end
