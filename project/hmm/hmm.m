@@ -2,7 +2,7 @@
 E = Y';
 
 NUM_EMISSION_STATES = 2;
-NUM_HIDDEN_STATES   = 3;
+NUM_HIDDEN_STATES   = 2;
 
 % Normalize Z to {1,2}
 for i=1:length(E)
@@ -13,30 +13,29 @@ end
 Adiag  = 0.9;  % rand(1)/2 + 1/2;
 Budiag = 0.5;  % rand(1)/2 + 1/2;
 [A_guess, B_guess] = em_init(NUM_HIDDEN_STATES, NUM_EMISSION_STATES, Adiag, Budiag);
-A_guess;
-B_guess;
-         
-[A, B] = hmmtrain(E, A_guess, B_guess)
 
 % Test and validate
 predictions = length(E);
 numcorrect = 0;
 for i=1:length(E)-1
+    fprintf('\n\nObserved 1:%d\n-------------\n', i);
+    
+    [A, B] = hmmtrain(E(1:i), A_guess, B_guess, 'Maxiterations',1000)
+    
     % Compute the posterior probabilities on Z for E(1:i)
     pr_Z = hmmdecode(E(1:i),A,B)';
     
     pr_zi   = pr_Z(i,:); 
     pr_zip1 = pr_zi * A;
-    E(i)
     pr_xip1 = pr_zip1 * B
 
     if pr_xip1(1) >= pr_xip1(2)  %pr_xip1(1)
-        %fprintf('predicted: -1. Correct: %d\n', Y(i+1));
+        fprintf('predicted: -1. Correct: %d\n', Y(i+1));
         if Y(i+1) == -1
             numcorrect = numcorrect + 1;
         end
     else
-        %fprintf('predicted: 1. Correct: %d\n', Y(i+1));
+        fprintf('predicted: 1. Correct: %d\n', Y(i+1));
         if Y(i+1) == 1
             numcorrect = numcorrect + 1;
         end
