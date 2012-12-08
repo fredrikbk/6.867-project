@@ -72,11 +72,11 @@ for name in os.listdir(rootdir):
                             if len(word2) == 0:
                                 continue
                             # Ignore couples of words where the second is common
-                            if word2 not in commonwords:
+                            if word2 not in commonwords and len(word2) >= 2 and len(word) >= 2:
                                 addwordtolist(word + '-' + word2, allwords, dirwords, wordcounts)
                         if (i+2) < listlen:
                             word3 = filter(str.isalpha, linelist[i+2])
-                            if len(word3) == 0:
+                            if len(word3) < 2 and len(word) < 2:
                                 continue
                             # Ignore triples of words where the start or end are common
                             if word in commonwords or word3 in commonwords:
