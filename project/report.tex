@@ -114,31 +114,45 @@ The second method we consider, which we call \textit{temporal memory}, addresses
 \section{Classifiers}
 \label{sec:techniques}
 
+In this section we describe and briefly evaluate the different classifiers we developed for this project.
+For each classifiers we describe our implementation choices, what if any third-party libraries we used, and then we demonstrate its performance on our dataset.
+
+Our classifiers can roughly be divided into four categories. The first are simple prediction rules. These are mostly included to demonstrate features of our data and to serve as baselines for the other classifiers. The next class include classifiers that do not have a probabilistic model. These include AdaBoost, Nearest Neighbor and SVM. The third class consist of classifiers based on probabilistic models. The only classifiers we implemented in this category is Naive Bayes. The fourth and final class of classifiers is sequential models and include M-order Markov Models and Hidden Markov Models.
+
+
+
 \subsection{Prediction Rules}
-\label{sec:}
+\label{sec:prediction-rules}
+
+In order to demonstrate properties of our data and to serve as baselines for more sophisticate classifiers we experimented with three simple prediction rules.
+
+\begin{description}
+\item[Majority] The first prediction rule is simply to count the number of positive and negative days in our training data set and 
+\end{description}
+
 
 \subsection{AdaBoost}
-\label{sec:}
+\label{sec:adaboost}
 
 \subsection{Nearest Neighbor}
-\label{sec:}
+\label{sec:nearest-neighbor}
 
 \subsection{SVM}
-\label{sec:}
+\label{sec:svm}
 
 \subsection{Naive Bayes}
-\label{sec:}
+\label{sec:naive-bayes}
 
 \subsection{Sequential Models}
+\label{sec:sequential-models}
+
+\subsubsection*{Markov Models}
 \label{sec:}
 
-\subsubsection{Markov Models}
+\subsubsection*{Hidden Markov Models}
 \label{sec:}
 
-\subsubsection{Hidden Markov Models}
-\label{sec:}
-
-\section{Evaluation and Analysis}
+\section{Analysis}
 
 \subsection{Temporal Shift}
 
