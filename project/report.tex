@@ -178,12 +178,12 @@ The basic versions of these models only use the previous history of Dow Jones pe
 However, we also combined Hidden Markov models with Naive Bayes in an attempt to improve our predictions by taking more information into account.
 
 \subsubsection*{Markov Models}
-\label{sec:}
+\label{sec:mm}
 
 We implemented M-order Markov Models for any value of M. However, since the number of model parameters grows exponentially in M, we are restricted to relatively small values of M by computational resources.
 
 \subsubsection*{Hidden Markov Models}
-\label{sec:}
+\label{sec:hmm}
 
 We also implemented a classifier for the more powerful Hidden Markov Models. An HMM assumes the observed values $Y$ are generated from a sequence of hidden states $Z$.
 The evolution of the hidden states is governed by the conditional probability distribution $p(Z^{(i)}|Z^{(i-1)})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y^{(i)}|Z^{(i)})$.
@@ -257,8 +257,33 @@ That is, at time $t$ we make predictions purely based on the previously observed
 As described in Section~\ref{sec:sequential-models} we have two sequential classifier.
 Section~\ref{mm-eval} evaluates our M-order Markov Model classifier and Section~\ref{hmm-eval} evaluates our vanilla Hidden Markov Model classifier.
 
+Our experimental setup is as follows.
+Let $t\in{}[s,n]$, where $s$ is the starting point and $n$ is the number of training examples (days) as before.
+For each $t$ we train our sequential classifiers using the performance of the Dow Jones the first $t-1$ days.
+We then use the sequential classifiers to predict the maximum likelihood value of $Y^{(t)}$ using the model parameters found in training.
+
+\begin{figure*}
+\center
+\hspace{0.5cm}
+\includegraphics[width=16cm]{experiments/seq_baseline.pdf}
+\caption{}
+\label{fig:seq-baseline}
+\end{figure*}
+
+We use two baselines for comparison.
+The first, called \emph{pick-most-common}, predicts each $Y_{(t)}$ to be the most common movement of the stock market for $(Y^{(1)}, ..., Y^{(t-1)})$.
+The second, called \emph{pick-previous}, predicts each $Y_{(t)}$ to be the same as the preceding day.
+Figure~\ref{fig:seq-baseline} shows the performance of the two baseline classifiers.
+Solid lines show the performance of the pick-most-common heuristic and stippled lines show the pick-previous heuristic.
+Furthermore, blue lines show the total number of correct guesses by each respective heuristic up to that day and green lines show the average prediction accuracy of each heuristic up to that day.
+Note that the classifier pick-most-common always predicts that the Dow Jones goes up since every prefix sequence of $Y$ is dominated by positive days. 
+Note also how both predictors perform worse at the end of the year.
+This is because the US was entering a recession and the market became both more negative, which caused the predict-most-common heuristic to do worse, and more volatile, which caused the predict-previous heuristic to do worse.
+
 \subsubsection{Markov Models}
 \label{mm-eval}
+
+As described in section~\ref{sec:mm}
 
 \subsubsection{Hidden Markov Models}
 \label{hmm-eval}
