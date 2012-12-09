@@ -1,4 +1,4 @@
-\documentclass[10pt]{article}
+\documentclass[10pt, twocolumn]{article}
 
 \usepackage{fullpage}
 \usepackage{amsmath}
@@ -14,7 +14,8 @@
 \def\TODO#1{\noindent\textbf{[TODO:} #1]}
 
 \begin{document}
-\title{Predicting the Stock Market with Newspaper Articles\\ (6.867 Final Project)}
+\title{Predicting the Stock Market from History and Newspaper Articles \\ \begin{large}6.867 Machine Learning Course Project\end{large}}
+
 %\subtitle{6.867 Final Project}
 \author{Chris Johnson \and Fredrik Kjolstad}
 \date{December 10, 2012}
@@ -27,7 +28,8 @@
 \section{Introduction}
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
 
-RELATED WORK: \cite{twitter}, \cite{mlstockmarket}
+\subsection{Related work}
+\cite{twitter}, \cite{mlstockmarket}
 
 \section{Feature Selection}
 
@@ -182,10 +184,18 @@ We also implemented a classifier for the more powerful Hidden Markov Models. An 
 The evolution of the hidden states is governed by the conditional probability distribution $p(Z_{i}|Z_{i-1})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y_{i}|Z_{i})$.
 This is depicted graphically as a Bayes Net in figure~\TODO{ref}.
 
-The HMM classifier is trained using the first $t$ values of $Y$ and then used to predict value $T_{t+1}$.
+The HMM classifier is trained using the values $Y_{1}...Y_{t}$ and then used to predict value $Y_{t+1}$.
 We used the MATLAB HMM Toolkit to learn the maximum-likelihood estimation of the model parameters A (the transition matrix) and B (the emission matrix) using the hmmtrain function, which internally uses the EM algorithm.
 We then used the function hmmdecode to generate the posterior probability on state $Z_{t}$.
-We then performed standard message passing along the chain from $Z_{t}$ to $Y_{t+1}$ to evaluate the marginal $p(Y_{t+1})$, which we used to predict the next value of $Y$ (see figure~\TODO{ref}).
+We then performed standard message passing along the chain from $Z_{t}$ to $Y_{t+1}$ to evaluate the marginal $p(Y_{t+1})$, which we used to predict $Y_{t+1}$.
+Figure~\ref{fig:hmm-predict} illustrated this model.
+
+\begin{figure}
+\center
+\includegraphics[width=6cm]{figs/hmm-predict.pdf}
+\caption{Predicting the movement of the Dow Jones the next day ($Y_{t+1}$) using a Hidden Markov Model.}
+\label{fig:hmm-predict}
+\end{figure}
 
 In a variation on this approach we combined the Hidden Markov Model with Naive Bayes to make prediction both based on trends in the market and based on the articles in the Wall Street Journal.
 To do this we first evaluated the marginal $p(X_{t+1})$ as described above.
@@ -208,7 +218,7 @@ In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
 Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
 Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
 We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
-Along the way we use our findings to gain insight into the underlying model and our data sets and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our retirement plan: happyface. Or not: sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: happyface. Or not: sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
