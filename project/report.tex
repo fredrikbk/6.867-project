@@ -165,7 +165,9 @@ The initial observation from all of the Figures was that the data is not linearl
 
 \TODO{Look through data sets and explain some outliers}
 
-\TODO{Should we do PLSI? Spent a lot of time trying to implement it, off the shelf at http://cs.gmu.edu/~pwang7/pLSI.html, we should use that and verify it is intractable for our dataset. Definitely mention it here.} 
+\TODO{Should we do PLSI? Spent a lot of time trying to implement it, off the shelf at http://cs.gmu.edu/~pwang7/pLSI.html, we should use that and verify it is intractable for our dataset. Definitely mention it here.}
+
+LSI clusters documents by projecting them to a lower-dimensional space and using a distance metric to measure similarity between topics. We briefly investigated using Probabilistic Latent Semantic Indexing (PLSI) to model topics and reduce the dimensionality differently~\cite{plsi}. PLSI addresses LSI's lack of a solid statistical model by modeling the distribution on terms, documents, and latent ``topics'' of those documents in the graphical model represented in \TODO{show figure here}. The model can be trained to fit $k$ topics to the data by the EM algorithm, and the posterior probabilities of topics can be computed to classify the input. We planned on using this to classify documents appearing each day, and reducing the dimensionality of the feature vectors to be a count of topics appearing during the day rather than a count of words. We implemented the PLSI algorithm iteratively, but PLSI appears to be intractable even on a small subset of our data set due to the high number words within those documents. We could remove some articles from the data set to make it more tractable, but we would lose a lot of information in doing so. We opted instead to simply use LSI which can incorporate all of the data efficiently. Also related is Probabilistic Dirichlet Allocation, which extends PLSI with a Dirichlet prior on words and documents~\cite{lda}, but that technique is beyond the scope of this project.
 
 \section{Classifiers}
 \label{sec:techniques}
