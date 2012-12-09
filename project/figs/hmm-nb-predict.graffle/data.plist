@@ -539,8 +539,8 @@
 			<integer>20</integer>
 			<key>Points</key>
 			<array>
-				<string>{177.5, 117.5000087654263}</string>
-				<string>{177.5, 167.49999123457371}</string>
+				<string>{177.5, 117.500008765426}</string>
+				<string>{177.5, 167.49999123454364}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1108,7 +1108,7 @@
 	<key>HPages</key>
 	<integer>1</integer>
 	<key>ImageCounter</key>
-	<integer>26</integer>
+	<integer>27</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict>
@@ -11740,7 +11740,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-12-09 16:55:37 +0000</string>
+	<string>2012-12-09 18:14:25 +0000</string>
 	<key>Modifier</key>
 	<string>Fredrik Kjolstad</string>
 	<key>NotesVisible</key>
