@@ -1,4 +1,4 @@
-\documentclass[10pt]{article}
+\documentclass[10pt, twocolumn]{article}
 
 \usepackage{fullpage}
 \usepackage{amsmath}
@@ -11,23 +11,30 @@
 \usepackage{amssymb}
 \usepackage[margin=0.82in]{geometry}
 
+\setcounter{secnumdepth}{2}
+
 \def\TODO#1{\noindent\textbf{[TODO:} #1]}
 
 \begin{document}
-\title{Predicting the Stock Market with Newspaper Articles\\ (6.867 Final Project)}
+\title{Predicting the Stock Market from History and Newspaper Articles \\ \begin{large}6.867 Machine Learning Course Project\end{large}}
+
 %\subtitle{6.867 Final Project}
 \author{Chris Johnson \and Fredrik Kjolstad}
 \date{December 10, 2012}
 \maketitle
 
 \begin{abstract}
-
 \end{abstract}
 
 \section{Introduction}
+
+
+
+
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
 
-RELATED WORK: \cite{twitter}, \cite{mlstockmarket}
+\subsection{Related work}
+\cite{twitter}, \cite{mlstockmarket}
 
 \section{Feature Selection}
 
@@ -154,6 +161,7 @@ Figures~\ref{lsiorig},~\ref{lsiscaled},~\ref{lsimem},~\ref{lsimemscaled},~and~\r
 
 In this section we describe the different classifiers we developed for this project.
 For each classifiers we describe our implementation choices and what, if any, third-party libraries we used.
+We implemented all of our classifiers as MATLAB functions.
 
 Our classifiers can roughly be divided into four categories. The first are simple prediction rules. These are mostly included to demonstrate features of our data and to serve as baselines for the other classifiers. The next class include classifiers that do not have a probabilistic model. These include AdaBoost, Nearest Neighbor and SVM. The third class consist of classifiers based on probabilistic models. The only classifiers we implemented in this category is Naive Bayes. The fourth and final class of classifiers is sequential models and include M-order Markov Models and Hidden Markov Models.
 
@@ -161,12 +169,10 @@ Our classifiers can roughly be divided into four categories. The first are simpl
 \label{sec:naive-bayes}
 
 The first classifier we implemented was Naive Bayes.
-Naive Bayes is a natural choice when the input features are discrete with very high dimensionality (such as bag of words).
-The reason for this is the naive bayes assumption, which asserts that the input features are independent.
+Naive Bayes is a natural choice when the input features are discrete with very high dimensionality, which is the case with our bags of words and phrases.
+The reason for this is the naive bayes assumption, which asserts that the input features are independent given the class.
 This means we can turn the multinomial on the full distribution, which has $O(2^D)$ parameters into $D$ binomials with $O(D)$ parameters.
 That is, $p(Y|X) \propto p(Y)p(X|Y) = p(Y)\prod_{i=1}^{D}{p(X^{(i)}|Y)}$, where $p(Y)$ is a prior on $Y$ (we will take advantage of the opportunity to put a prior on $Y$ later).
-
-\TODO{Are the input features independent or are they independent conditioned on the class?}
 
 Although this assumption may seem \emph{overly} naive, it has proven to work well on document classification tasks such as spam detection, which are similar to our problem.
 It is also a probabilistic model, as opposed to most of our other classifiers, which means we can combine it with temporal probabilistic models.
@@ -192,7 +198,9 @@ Since LSI reduces the dimensionality of the feature space to identify latent fea
 \subsection{Support Vector Machine}
 \label{sec:svm}
 
-We used our implementation of kernalized Support Vector Machines (SVM) with slack variables from a previous assignment. Our implementation is parameterized by $C$, which represents the weight given to the slack variables in the optimization problems. Higher values of $C$ give a harder margin SVM, but they tend to generalize worse.
+We used our implementation of dual form kernalized Support Vector Machines (SVM) with slack variables from a previous assignment.
+This implementation uses the MATLAB quadprog function to solve the resulting quadratic optimization problem.
+Our implementation is parameterized by $C$, which represents the weight given to the slack variables in the optimization problems. Higher values of $C$ give a harder margin SVM, but they tend to generalize worse.
 
 Since it doesn't make sense to train an SVM on a bag of words, we use the feature vectors resulting from LSI as described in Section~\ref{sec:topicmodel}.
 
@@ -214,26 +222,61 @@ We implemented M-order Markov Models for any value of M. However, since the numb
 \label{sec:}
 
 We also implemented a classifier for the more powerful Hidden Markov Models. An HMM assumes the observed values $Y$ are generated from a sequence of hidden states $Z$.
-The evolution of the hidden states is governed by the conditional probability distribution $p(Z_{i}|Z_{i-1})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y_{i}|Z_{i})$.
-This is depicted graphically as a Bayes Net in figure~\TODO{ref}.
+The evolution of the hidden states is governed by the conditional probability distribution $p(Z^{(i)}|Z^{(i-1)})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y^{(i)}|Z^{(i)})$.
+%This is depicted graphically as a Bayes Net in figure~\TODO{ref}.
 
-The HMM classifier is trained using the first $t$ values of $Y$ and then used to predict value $T_{t+1}$.
+The HMM classifier is trained using the values $Y^{(1)}...Y^{(t-1)}$ and then used to predict value $Y^{(t)}$.
 We used the MATLAB HMM Toolkit to learn the maximum-likelihood estimation of the model parameters A (the transition matrix) and B (the emission matrix) using the hmmtrain function, which internally uses the EM algorithm.
-We then used the function hmmdecode to generate the posterior probability on state $Z_{t}$.
-We then performed standard message passing along the chain from $Z_{t}$ to $Y_{t+1}$ to evaluate the marginal $p(Y_{t+1})$, which we used to predict the next value of $Y$ (see figure~\TODO{ref}).
+We then used the function hmmdecode to generate the posterior probability on state $Z^{(t-1)}$.
+We then performed standard message passing along the chain from $Z^{(t-1)}$ to $Y^{(t)}$ to evaluate the marginal $p(Y^{(t)})$, which we used to predict $Y^{(t)}$.
+Figure~\ref{fig:hmm-predict} illustrated this model.
+
+\begin{figure}
+\center
+\includegraphics[width=6cm]{figs/hmm-predict.pdf}
+\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance.}
+\label{fig:hmm-predict}
+\end{figure}
 
 In a variation on this approach we combined the Hidden Markov Model with Naive Bayes to make prediction both based on trends in the market and based on the articles in the Wall Street Journal.
-To do this we first evaluated the marginal $p(X_{t+1})$ as described above.
-We then trained a Naive Bayes predictor on the first $t$ (X,Y) tuples and used this to predict the value of $X_{t+1}$, using marginal $p(X_{t+1})$ from the HMM as a prior.
+To do this we first evaluated the marginal $p(Y^{(t)})$ as described above.
+We then trained a Naive Bayes predictor on the first $t-1$ tuples, $\{(X^{(1)},Y^{(1)}), ..., (X^{(t-1)},Y^{(t-1)})\}$, and used this to predict the value of $Y_{t}$, using marginal $p(Y_{t})$ from the HMM as a prior.
 That is, we combine our prior belief about which way we think the market will go based on recent performance, with the new information in the WSJ.
-This is illustrated in figure~\TODO{ref}. 
+This is illustrated in figure~\ref{fig:hmm-nb-predict}. 
+
+\begin{figure}
+\center
+\includegraphics[width=6cm]{figs/hmm-nb-predict.pdf}
+\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance, combined with Naive Bayes to incorporate information in the Wall Street Journal.}
+\label{fig:hmm-nb-predict}
+\end{figure}
+
+\section{Evaluation and Analysis}
+
+In this section we seek to answer the following research questions:
+\begin{description}
+\item[Question 1] Can we predict the movement of the Dow Jones based on the Wall Street Journal?
+\item[Question 2] Can we predict the movement of the Dow Jones based on past performance?
+\item[Question 3] Can we predict the future performance of the stock market to make money?
+\end{description}
+
+The following subsections seek to answer these questions through a series of experiments that employ our suite of classifiers and feature sets.
+In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
+Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
+Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
+We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan. happyface. Or not: sadface.}.
 
 
-\section{Analysis}
+\subsection{Predicting the Dow Jones based on the Wall Street Journal}
+\label{wsj->dj}
 
-\subsection{Temporal Shift}
+\begin{itemize}
+\item The word ``ambitions'' is the best indicator of the Dow Jones gaining. If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.
+\item The word ``tundra'' is the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the us and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones).
 
 
+\subsubsection*{Temporal Shift}
 Temporal shifting trades information about the current day for information about the previous (or next) day.
 
 
@@ -241,11 +284,27 @@ The bag features $B$ associate each day's price direction in $Y$ with the same d
 
 We introduce temporally shifted feature matrices to investigate these possibilities, defined by $F_{d,i} = B_{d-1,i}$ and $F_{d,i} = B_{d+1,i}$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
 
-\begin{itemize}
-\item The word ``ambitions'' is the best indicator of the Dow Jones gaining. If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.
-\item The word ``tundra'' is the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the us and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones).
+\subsection{Predicting the Dow Jones based on past trends}
+\label{dj->dj}
+
+In this section we look at predicting the performance of the Dow Jones based on past trends.
+That is, at time $t$ we make predictions purely based on the previously observed performance of the Dow Jones, represented by the sequence $(Y^{(1)}, ..., Y^{(t-1)})$, and do not take Wall Street Journal articles into account.
+
+As described in Section~\ref{sec:sequential-models} we have two sequential classifier.
+Section~\ref{mm-eval} evaluates our M-order Markov Model classifier and Section~\ref{hmm-eval} evaluates our vanilla Hidden Markov Model classifier.
+
+\subsubsection{Markov Models}
+\label{mm-eval}
+
+\subsubsection{Hidden Markov Models}
+\label{hmm-eval}
+
+\subsection{Predicting the future performance of the Dow Jones}
+\label{predict-dj}
 
 \end{itemize}
+
+\section{Future Work}
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
