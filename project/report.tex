@@ -11,6 +11,8 @@
 \usepackage{amssymb}
 \usepackage[margin=0.82in]{geometry}
 
+\setcounter{secnumdepth}{2}
+
 \def\TODO#1{\noindent\textbf{[TODO:} #1]}
 
 \begin{document}
@@ -22,10 +24,13 @@
 \maketitle
 
 \begin{abstract}
-
 \end{abstract}
 
 \section{Introduction}
+
+
+
+
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
 
 \subsection{Related work}
@@ -158,7 +163,7 @@ Since LSI reduces the dimensionality of the feature space to identify latent fea
 \label{sec:svm}
 
 We used our implementation of dual form kernalized Support Vector Machines (SVM) with slack variables from a previous assignment.
-\TODO{Insert this sentence here?: This implementation uses the MATLAB quadprog function to solve the resulting quadratic optimization problem.}
+This implementation uses the MATLAB quadprog function to solve the resulting quadratic optimization problem.
 Our implementation is parameterized by $C$, which represents the weight given to the slack variables in the optimization problems. Higher values of $C$ give a harder margin SVM, but they tend to generalize worse.
 
 Since it doesn't make sense to train an SVM on a bag of words, we use the feature vectors resulting from LSI as described in Section~\ref{sec:topicmodel}.
@@ -222,9 +227,9 @@ In this section we seek to answer the following research questions:
 The following subsections seek to answer these questions through a series of experiments that employ our suite of classifiers and feature sets.
 In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
 Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
-Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
+Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
 We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
-Along the way we use our findings to gain insight into the underlying model and our data sets and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: happyface. Or not: sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan. happyface. Or not: sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
@@ -243,8 +248,20 @@ The bag features $B$ associate each day's price direction in $Y$ with the same d
 
 We introduce temporally shifted feature matrices to investigate these possibilities, defined by $F_{d,i} = B_{d-1,i}$ and $F_{d,i} = B_{d+1,i}$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
 
-\subsection{Predicting the Dow Jones based on trends}
+\subsection{Predicting the Dow Jones based on past trends}
 \label{dj->dj}
+
+In this section we look at predicting the performance of the Dow Jones based on past trends.
+That is, at time $t$ we make predictions purely based on the previously observed performance of the Dow Jones, represented by the sequence $(Y^{(1)}, ..., Y^{(t-1)})$, and do not take Wall Street Journal articles into account.
+
+As described in Section~\ref{sec:sequential-models} we have two sequential classifier.
+Section~\ref{mm-eval} evaluates our M-order Markov Model classifier and Section~\ref{hmm-eval} evaluates our vanilla Hidden Markov Model classifier.
+
+\subsubsection{Markov Models}
+\label{mm-eval}
+
+\subsubsection{Hidden Markov Models}
+\label{hmm-eval}
 
 \subsection{Predicting the future performance of the Dow Jones}
 \label{predict-dj}
