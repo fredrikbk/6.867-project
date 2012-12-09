@@ -198,26 +198,21 @@ This is illustrated in figure~\TODO{ref}.
 
 In this section we seek to answer the following research questions:
 \begin{description}
-\item[Question 1] Can we predict the movements of the Dow Jones based on the content of the Wall Street Journal?
-\item[Question 2] Can the movement of the Dow Jones be predicted based on past performance?
+\item[Question 1] Can we predict the movement of the Dow Jones based on the content of the Wall Street Journal?
+\item[Question 2] Can we predict the movement of the Dow Jones based on past performance?
 \item[Question 3] Can we predict the future performance of the stock market to make money?
 \end{description}
 
-To answer question 1 and 2 we perform a sequence of experiments that evaluate how well our suite of classifiers can make predictions based on our data set.
-In section~
+The following subsections seek to answer these questions through a series of experiments that employ our suite of classifiers and feature sets.
+In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
+Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
+Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
+We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
+Along the way we use our findings to gain insight into the underlying model and our data sets and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our retirement plan: happyface. Or not: sadface.}.
 
-
-In this section we evaluate our classifiers and look for the one we think will make us the most money.
-We also perform experiments, such as the temporal shift experiment, to try to gain further insight into our dataset.
-
-We use two different experimental setups.
-The first setup is for non-temporal models.
-Here we imagine that we are at the end of November 2007 and have access to all issues of the Wall Street Journal and all Dow Jones moves January-November.
-We are now trying to predict every day in November.
-
-Sequential Models...
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
+\label{wsj->dj}
 
 \begin{itemize}
 \item The word ``ambitions'' is the best indicator of the Dow Jones gaining. If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.
@@ -233,9 +228,10 @@ The bag features $B$ associate each day's price direction in $Y$ with the same d
 We introduce temporally shifted feature matrices to investigate these possibilities, defined by $F_{d,i} = B_{d-1,i}$ and $F_{d,i} = B_{d+1,i}$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
 
 \subsection{Predicting the Dow Jones based on trends}
-
+\label{dj->dj}
 
 \subsection{Predicting the future performance of the Dow Jones}
+\label{predict-dj}
 
 \end{itemize}
 
