@@ -109,7 +109,43 @@ The feature vectors previously described in this section are all very high-dimen
 
 The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The input to LSI is a term-document matrix, a matrix in which each row represents a term and each column represents a document. The element at row $t$ and column $d$ is the frequency of term $t$ in document $d$ (this is the transpose of our bag of words feature matrix $B$, viewing each day as a ``document''). LSI requires finding the Singular Value Decompositon (SVD) of this term-document matrix. If $X$ is our $t \times d$ term-document matrix, then the SVD of $X$ are the unique matrices $T, S, \text{ and } D$, such that $T$ is $t \times m$, S is diagonal $m \times m$, $D$ is $d \times m$ and $X = T S D'$, where $D'$ is the transpose of $D$. By the definition of SVD, the columns of $T$ are eigenvectors of $X X'$, the rows of $D$ are the eigenvectors of $X' X$, and $S$ is a diagonal matrix of the square roots of the eigenvalues for both. The fundamental insight used by LSI is that zeroing out all but the $r$ largest eigenvectors in $S$ results in a new matrix $\hat{X}$ which is the closest matrix of rank $r$ to the original $X$ by least-squares~\cite{lsi}. Zeroing out those elements also means we need to retain only $m$ columns of $T$ and $D$ to construct the new matrix, so we have greatly reduced the number of columns we must retain for $r << m$. This result is called the rank-reduced SVD. The $r$ columns of $D$ corresponding to the $r$ largest eigenvalues represent each document with only $r$ features, multiplying by $S$ scales this new vector space appropriately, so we use $S D'$ as our data matrix which is $d \times r$ with similarity between vectors representing similarity between semantic information in the original input space. The LSI paper recommends finding similarity by cosine of the angle between vectors, and we compare using angle and Euclidean distance in our results. New input vectors can be projected into this new space through a method described in~\cite{lsi}.
 
-\TODO{Add figures showing features in this reduced space}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiorig.pdf}
+\caption{Feature space from 2D LSI on the original bag of words}
+\label{lsiorig}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiscaled.pdf}
+\caption{Feature space from 2D LSI on the scaled log-frequencies of words each day}
+\label{lsiscaled}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsimem.pdf}
+\caption{Feature space from 2D LSI on data augmented with 6 days of memory}
+\label{lsimem}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsimemscaled.pdf}
+\caption{Feature space from 2D LSI on data augmented with 6 days of memory, which was then scaled}
+\label{lsimemscaled}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiscaledmem.pdf}
+\caption{Feature space from 2D LSI on scaled data augmented with 6 days of scaled log-frequencies}
+\label{lsiscaledmem}
+\end{figure}
+
+Figures~\ref{lsiorig},~\ref{lsiscaled},~\ref{lsimem},~\ref{lsimemscaled},~and~\ref{lsiscaledmem} show different vector spaces resulting from running LSI and reducing to two dimensions for data conditioned using several previously mentioned techniques. The red circles are feature vectors for days the market went down, and the blue circles are feature vectors for days the market went up.
 
 \TODO{Should we do PLSI? Spent a lot of time trying to implement it, off the shelf at http://cs.gmu.edu/~pwang7/pLSI.html, we should use that and verify it is intractable for our dataset. Definitely mention it here.} 
 
