@@ -19,7 +19,7 @@
 \title{Predicting the Stock Market from History and Newspaper Articles \\ \begin{large}6.867 Machine Learning Course Project\end{large}}
 
 %\subtitle{6.867 Final Project}
-\author{Chris Johnson \and Fredrik Kjolstad}
+\author{Christopher R. Johnson  \\ \texttt{crjohns@mit.edu} \and Fredrik Kjolstad \\ \texttt{fredrikk@mit.edu}}
 \date{December 10, 2012}
 \maketitle
 
@@ -32,6 +32,8 @@
 
 
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
+
+\TODO{Motivate the problem and explain the different market hypotheses in \cite{mlstockmarket}}
 
 \subsection{Related work}
 \cite{twitter}, \cite{mlstockmarket}
@@ -265,7 +267,7 @@ In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
 Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
 Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
 We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
-Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan. happyface. Or not: sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: Happyface. Or not: Sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
