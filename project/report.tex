@@ -103,6 +103,7 @@ A major problem with this method is that it increases the length of our feature 
 The second method we consider, which we call \textit{temporal memory}, addresses this issue. Each feature vector is augmented with a weighted average of the frequencies of each word over the previous $L$ days. That is, $$\displaystyle F_{d} = B_{d} \oplus {{\sum^L_{i=1}{\alpha_i B_{d-i}}} \over {\sum^L_{i=1}{\alpha_i}}}$$ Again, frequencies are assumed to be 0 for days before the beginning of our data set, and we round the weighted average up to an integer. This allows us to specify the relative weights of historic data for the previous $L$ days while only doubling the size of our feature vectors. 
 
 \subsection{Topic Modeling}
+\label{sec:topicmodel}
 
 The feature vectors previously described in this section are all very high-dimensional, containing either tens- or hundreds-of-thousands of word frequencies. This is problematic for several learning algorithms we applied, including SVMs and K-Nearest-Neighbor. We use dimensionality reduction and topic modeling techniques to reduce the dimensionality of the feature vectors while retaining important semantic information.
 
@@ -110,7 +111,7 @@ The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The i
 
 \TODO{Add figures showing features in this reduced space}
 
-\TODO{Should we do PLSI?} 
+\TODO{Should we do PLSI? Spent a lot of time trying to implement it, off the shelf at http://cs.gmu.edu/~pwang7/pLSI.html, we should use that and verify it is intractable for our dataset. Definitely mention it here.} 
 
 \section{Classifiers}
 \label{sec:techniques}
@@ -148,12 +149,16 @@ Moreover, in addition to serving as a efficient classifier on bags of words, Ada
 \subsection{Nearest Neighbor}
 \label{sec:nearest-neighbor}
 
-\TODO{Chris: Write this section.}
+We implemented K-Nearest-Neighbor using feature vectors processed using LSI as decribed in Section~\ref{sec:topicmodel}.
 
-\subsection{SVM}
+Since LSI reduces the dimensionality of the feature space to identify latent features, we project input feature vectors into the training space and take the majority vote of the $k$ points in the training set closest to the new point under some metric. We use both angle (as used in~\cite{lsi}) and Euclidean distance.
+
+\subsection{Support Vector Machine}
 \label{sec:svm}
 
-\TODO{Chris: Write this section. Say that we chose SVM's since they are probably the most popular classifiers due to their efficiency. However, we could not possible train them on the bag of words, so their usage necessitated dimensionality reduction.}
+We used our implementation of kernalized Support Vector Machines (SVM) with slack variables from a previous assignment. Our implementation is parameterized by $C$, which represents the weight given to the slack variables in the optimization problems. Higher values of $C$ give a harder margin SVM, but they tend to generalize worse.
+
+Since it doesn't make sense to train an SVM on a bag of words, we use the feature vectors resulting from LSI as described in Section~\ref{sec:topicmodel}.
 
 \subsection{Sequential Models}
 \label{sec:sequential-models}
