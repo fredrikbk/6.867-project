@@ -1,6 +1,5 @@
-function [out] = augment_data(X)
+function [out] = augment_data(X, lookback)
 
-lookback = 2;
 sparseX = X;
 numR = length(sparseX(:,1));
 numC = length(sparseX(1,:));

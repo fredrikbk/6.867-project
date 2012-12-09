@@ -33,9 +33,9 @@ RELATED WORK: \cite{twitter}, \cite{mlstockmarket}
 
 Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. 
 
-We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with numbers of articles around either 125 or 15 per day. Since some days have fewer articles, which may decrease their effectiveness for classification. 
+We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with numbers of articles around either 125 or 15 per day. Some days have fewer articles, which may decrease their effectiveness for classification. We also needed to be careful to scale the word frequencies for each day so that this difference between days does not affect feature extraction.
 
-\TODO{Maybe we want to scale counts per day, but for NB this doesn't matter. Maybe some of the dimensionality reduction techniques are returning which days have more articles!}
+\TODO{Maybe we want to scale counts per day, but for NB this doesn't matter. Maybe some of the dimensionality reduction techniques are returning which days have more articles! THIS WAS MENTIONED, MAKE SURE IT IS RIGHT}
 
 \begin{figure}
 \centering
@@ -104,13 +104,13 @@ The second method we consider, which we call \textit{temporal memory}, addresses
 
 \subsection{Topic Modeling}
 
- 
-\TODO{Read the paper that is cited and see if implementing hashing is good, seems our assumptions are different from theirs}
+The feature vectors previously described in this section are all very high-dimensional, containing either tens- or hundreds-of-thousands of word frequencies. This is problematic for several learning algorithms we applied, including SVMs and K-Nearest-Neighbor. We use dimensionality reduction and topic modeling techniques to reduce the dimensionality of the feature vectors while retaining important semantic information.
 
-\TODO{Exhaustively discuss all feature selections here and cite sources}
+The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The input to LSI is a term-document matrix, a matrix in which each row represents a term and each column represents a document. The element at row $t$ and column $d$ is the frequency of term $t$ in document $d$ (this is the transpose of our bag of words feature matrix $B$, viewing each day as a ``document''). LSI requires finding the Singular Value Decompositon (SVD) of this term-document matrix. If $X$ is our $t \times d$ term-document matrix, then the SVD of $X$ are the unique matrices $T, S, \text{ and } D$, such that $T$ is $t \times m$, S is diagonal $m \times m$, $D$ is $d \times m$ and $X = T S D'$, where $D'$ is the transpose of $D$. By the definition of SVD, the columns of $T$ are eigenvectors of $X X'$, the rows of $D$ are the eigenvectors of $X' X$, and $S$ is a diagonal matrix of the square roots of the eigenvalues for both. The fundamental insight used by LSI is that zeroing out all but the $r$ largest eigenvectors in $S$ results in a new matrix $\hat{X}$ which is the closest matrix of rank $r$ to the original $X$ by least-squares~\cite{lsi}. Zeroing out those elements also means we need to retain only $m$ columns of $T$ and $D$ to construct the new matrix, so we have greatly reduced the number of columns we must retain for $r << m$. This result is called the rank-reduced SVD. The $r$ columns of $D$ corresponding to the $r$ largest eigenvalues represent each document with only $r$ features, multiplying by $S$ scales this new vector space appropriately, so we use $S D'$ as our data matrix which is $d \times r$ with similarity between vectors representing similarity between semantic information in the original input space. The LSI paper recommends finding similarity by cosine of the angle between vectors, and we compare using angle and Euclidean distance in our results. New input vectors can be projected into this new space through a method described in~\cite{lsi}.
 
-\TODO{Read all sources and be familiar with them for interview!}
- 
+\TODO{Add figures showing features in this reduced space}
+
+\TODO{Should we do PLSI?} 
 
 \section{Classifiers}
 \label{sec:techniques}
@@ -128,6 +128,8 @@ Naive Bayes is a natural choice when the input features are discrete with very h
 The reason for this is the naive bayes assumption, which asserts that the input features are independent.
 This means we can turn the multinomial on the full distribution, which has $O(2^D)$ parameters into $D$ binomials with $O(D)$ parameters.
 That is, $p(Y|X) \propto p(Y)p(X|Y) = p(Y)\prod_{i=1}^{D}{p(X^{(i)}|Y)}$, where $p(Y)$ is a prior on $Y$ (we will take advantage of the opportunity to put a prior on $Y$ later).
+
+\TODO{Are the input features independent or are they independent conditioned on the class?}
 
 Although this assumption may seem \emph{overly} naive, it has proven to work well on document classification tasks such as spam detection, which are similar to our problem.
 It is also a probabilistic model, as opposed to most of our other classifiers, which means we can combine it with temporal probabilistic models.

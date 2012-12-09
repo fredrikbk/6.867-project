@@ -40,6 +40,7 @@ outcell = cell(3);
 outcell{1} = U;
 outcell{2} = S;
 outcell{3} = V;
+outcell{4} = V*S
 
 
 end
