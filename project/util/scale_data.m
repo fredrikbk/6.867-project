@@ -7,7 +7,7 @@ function [ scaledX ] = scale_data( X )
         count = length(find(therow));
         sumx = sum(therow);
         for j=find(therow)
-            scaledX(i,j) = log(scaledX(i,j) + 1) - log(sumx + count);
+            scaledX(i,j) = scaledX(i,j) / sumx; %log(scaledX(i,j) + 1) - log(sumx + count);
         end
     end
 

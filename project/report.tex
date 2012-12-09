@@ -19,7 +19,7 @@
 \title{Predicting the Stock Market from History and Newspaper Articles \\ \begin{large}6.867 Machine Learning Course Project\end{large}}
 
 %\subtitle{6.867 Final Project}
-\author{Chris Johnson \and Fredrik Kjolstad}
+\author{Christopher R. Johnson  \\ \texttt{crjohns@mit.edu} \and Fredrik Kjolstad \\ \texttt{fredrikk@mit.edu}}
 \date{December 10, 2012}
 \maketitle
 
@@ -33,16 +33,18 @@
 
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
 
+\TODO{Motivate the problem and explain the different market hypotheses in \cite{mlstockmarket}}
+
 \subsection{Related work}
 \cite{twitter}, \cite{mlstockmarket}
 
 \section{Feature Selection}
 
-Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. 
+Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. This includes omitting data from weekends, which may be too strong a simplifying assumption.
 
-We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with numbers of articles around either 125 or 15 per day. Some days have fewer articles, which may decrease their effectiveness for classification. We also needed to be careful to scale the word frequencies for each day so that this difference between days does not affect feature extraction.
+\TODO{We need to mention weekends, but this might be too negative}
 
-\TODO{Maybe we want to scale counts per day, but for NB this doesn't matter. Maybe some of the dimensionality reduction techniques are returning which days have more articles! THIS WAS MENTIONED, MAKE SURE IT IS RIGHT}
+We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with numbers of articles around either 125 or 15 per day. Some days have fewer articles, which may decrease their effectiveness for classification. In Section~\ref{sec:bagsofwords} we mention some strategies used to scale the counts so that effects of this difference may be reduced.
 
 \begin{figure}
 \centering
@@ -90,6 +92,7 @@ We will introduce the following terminology to describe the feature matrix and i
 \end{itemize}
 
 \subsection{Bag of Words and Phrases}
+\label{sec:bagsofwords}
 
 The simplest feature vector is simply a ``bag of words'' for each day~\cite{featurehash}, which consists of frequency counts of all words in articles published on that day. Elements of the feature vector take the form: $$\displaystyle F_{d,i} = \sum_{A \in D_d}{A_i}$$ These feature vectors are extremely sparse, since most articles do not use tens of thousands of unique words (we represent our data set as a sparse matrix
 in MATLAB to reduce memory consumption to reasonable levels).
@@ -97,7 +100,11 @@ in MATLAB to reduce memory consumption to reasonable levels).
 An obvious weakness of this technique is that it takes words out of context. Phrases such as ``stocks went up'' simply increase the counts of the three words independently. We augmented this technique by creating ``bags of phrases'' as well. In addition to counts of words, we keep counts of two and three word phrases
 as well. We turn phrases into single words of the form ``word1-word2'' and ``word1-word2-word3'' with the restrictions that word1 and word3 may not be common words and the first or last words of a phrase may not be a single character. Common words beginning a 2 word phrase or ending a 3 word phrase are undesirable because we want to pick up on phrases where the subject is important. The middle word in the 3 word phrases may be common so we find phrases that combine two useful words such as, ``stocks are down.'' Filtering out phrases that appear less than $m = 10$ times in the year results in 194,679 unique phrases and words, so this technique can greatly increase the number of features.
 
-Bags of words and bags of phrases form the basis of many of our other feature selection techniques, so we will call the feature matrix resulting from the use of either $B$. Since bags of phrases just increase the vocabulary size, it can be viewed as augmenting the article word lists $A$ with additional words. They bags of words or phrases may be used interchangeably, so we will refer to the resulting feature matrix for either as $B$ in the rest of this section; when we present results we will explicitly state if we build on bags of words or phrases as well as the filtering parameters used.
+A bag of words for each day has several other problems. First, it reduces all articles for a single day to a bag of words for that day, potentially losing some information. Computing on counts of words per article per day would quickly become intractable in terms of memory consumption, so this simplifying assumption was necessary to compute on the data. Another problem is that some days have fewer articles than other days, which is a source of variation in the data which we do not wish to measure. We can condition our data to replace each word count with the proportion of times that word appears out of all words in the day, and we evaluate the effect of this conditioning later on SVMs and K-Nearest-Neighbor methods which may benefit from it. This kind of conditioning is unnecessary for Naive Bayes.
+
+Bags of words and bags of phrases form the basis of many of our other feature selection techniques, so we will call the feature matrix resulting from the use of either $B$. Since bags of phrases just increase the vocabulary size, it can be viewed as augmenting the article word lists $A$ with additional words. The bags of words or phrases may be used interchangeably, so we will refer to the resulting feature matrix for either as $B$ in the rest of this section; when we present results we will explicitly state if we build on bags of words or phrases as well as the filtering parameters used.
+
+As mentioned previously,
 
 \subsection{Temporal Features}
 
@@ -109,14 +116,54 @@ A major problem with this method is that it increases the length of our feature 
 
 The second method we consider, which we call \textit{temporal memory}, addresses this issue. Each feature vector is augmented with a weighted average of the frequencies of each word over the previous $L$ days. That is, $$\displaystyle F_{d} = B_{d} \oplus {{\sum^L_{i=1}{\alpha_i B_{d-i}}} \over {\sum^L_{i=1}{\alpha_i}}}$$ Again, frequencies are assumed to be 0 for days before the beginning of our data set, and we round the weighted average up to an integer. This allows us to specify the relative weights of historic data for the previous $L$ days while only doubling the size of our feature vectors. 
 
-\subsection{Topic Modeling}
+\subsection{Topic Modeling and Dimensionality Reduction}
 \label{sec:topicmodel}
 
 The feature vectors previously described in this section are all very high-dimensional, containing either tens- or hundreds-of-thousands of word frequencies. This is problematic for several learning algorithms we applied, including SVMs and K-Nearest-Neighbor. We use dimensionality reduction and topic modeling techniques to reduce the dimensionality of the feature vectors while retaining important semantic information.
 
 The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The input to LSI is a term-document matrix, a matrix in which each row represents a term and each column represents a document. The element at row $t$ and column $d$ is the frequency of term $t$ in document $d$ (this is the transpose of our bag of words feature matrix $B$, viewing each day as a ``document''). LSI requires finding the Singular Value Decompositon (SVD) of this term-document matrix. If $X$ is our $t \times d$ term-document matrix, then the SVD of $X$ are the unique matrices $T, S, \text{ and } D$, such that $T$ is $t \times m$, S is diagonal $m \times m$, $D$ is $d \times m$ and $X = T S D'$, where $D'$ is the transpose of $D$. By the definition of SVD, the columns of $T$ are eigenvectors of $X X'$, the rows of $D$ are the eigenvectors of $X' X$, and $S$ is a diagonal matrix of the square roots of the eigenvalues for both. The fundamental insight used by LSI is that zeroing out all but the $r$ largest eigenvectors in $S$ results in a new matrix $\hat{X}$ which is the closest matrix of rank $r$ to the original $X$ by least-squares~\cite{lsi}. Zeroing out those elements also means we need to retain only $m$ columns of $T$ and $D$ to construct the new matrix, so we have greatly reduced the number of columns we must retain for $r << m$. This result is called the rank-reduced SVD. The $r$ columns of $D$ corresponding to the $r$ largest eigenvalues represent each document with only $r$ features, multiplying by $S$ scales this new vector space appropriately, so we use $S D'$ as our data matrix which is $d \times r$ with similarity between vectors representing similarity between semantic information in the original input space. The LSI paper recommends finding similarity by cosine of the angle between vectors, and we compare using angle and Euclidean distance in our results. New input vectors can be projected into this new space through a method described in~\cite{lsi}.
 
-\TODO{Add figures showing features in this reduced space}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiorig.pdf}
+\caption{Feature space from 2D LSI on the original bag of words}
+\label{lsiorig}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiscaled.pdf}
+\caption{Feature space from 2D LSI on the scaled frequencies of words each day}
+\label{lsiscaled}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsimem.pdf}
+\caption{Feature space from 2D LSI on data augmented with 6 days of memory}
+\label{lsimem}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsimemscaled.pdf}
+\caption{Feature space from 2D LSI on data augmented with 6 days of memory, which was then scaled}
+\label{lsimemscaled}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{plots/lsiscaledmem.pdf}
+\caption{Feature space from 2D LSI on scaled data augmented with 6 days of scaled frequencies}
+\label{lsiscaledmem}
+\end{figure}
+
+Figures~\ref{lsiorig},~\ref{lsiscaled},~\ref{lsimem},~\ref{lsimemscaled},~and~\ref{lsiscaledmem} show different vector spaces resulting from running LSI and reducing to two dimensions for data conditioned using several previously mentioned techniques. The red circles are feature vectors for days the market went down, and the blue circles are feature vectors for days the market went up. A reduction to two dimensions loses a lot of data, but it allows us to graphically investigate the structure of our data resulting from initial feature choices and LSI itself. In later experiments we will reduce the space to approximately 100 features as recommended in the literature~\cite{lsi}.  
+
+The initial observation from all of the Figures was that the data is not linearly separable in two dimensions. This is expected, since that would imply a very strong relationship between articles and closing stock prices and would make stock prediction trivial. Certain techniques such as hard-margin SVMs will not work, so we will look to evaluate these features using soft-margin SVMs and K-Nearest-Neighbors in later sections. Figures~\ref{lsiorig}~and~\ref{lsiscaled} demonstrate the effect of scaling on our resulting feature space. Applying LSI to the original bag of words has a large mixed cluster of up and down days, along with several outliers that are mostly up days. Applying LSI to the scaled bag of words results in a more centered data distribution with some areas of higher ``up'' density. The data is slightly better clustered, but it is still very noisy and may be difficult to use for good predictions. Figures~\ref{lsimem},~\ref{lsimemscaled},~and~\ref{lsiscaledmem} show the effects of augmenting with a weighted average 6 days of temporal data. The difference between Figures~\ref{lsimemscaled}~and~\ref{lsiscaledmem} is that Figure~\ref{lsimemscaled} shows the result of first augmenting $B$ with temporal data and then scaling it, while Figure~\ref{lsiscaledmem} shows the result of scaling $B$ and then augmenting that with a weighted average of 6 days of scaled word frequencies. The three figures show densely clustered data with several sparse outliers. The dense clustering may be the result of most days having similar histories. The outliers are, interestingly, mostly up days. This may be detecting long term trends in the newspaper and the market. Figure~\ref{lsiscaledmem} interestingly has a long tail out to the positive $x$ direction while it has a lot of variance in the $y$ direction for $x$ values around $-125$. This is mostly an artifact of the scale of the graph, looking at the $y$ scale it is clear that the region of high $y$ variance has about as much variance in the $x$ direction. The top and bottom of this distribution, however, have many up days, which may be useful for classification.
+
+\TODO{Look through data sets and explain some outliers}
 
 \TODO{Should we do PLSI? Spent a lot of time trying to implement it, off the shelf at http://cs.gmu.edu/~pwang7/pLSI.html, we should use that and verify it is intractable for our dataset. Definitely mention it here.} 
 
@@ -229,7 +276,7 @@ In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
 Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
 Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
 We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
-Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan. happyface. Or not: sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: Happyface. Or not: Sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
