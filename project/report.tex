@@ -489,7 +489,7 @@ As such, although the HMM is also ineffective in times of high volatility, it is
 The final sequential model that we will discuss here the a combination of Hidden Markov Models with Naive Bayes we described in Section~\ref{sec:hmm} and illustrated in Figure~\ref{fig:hmm-nb-predict}.
 In this model we run our Hidden Markov Model on the first $t-1$ days as before, but instead of predicting the most likely day we use the marginal probability $p(Y^{(t)})$ as a prior for Naive Bayes applied to the textual corpus $X^{(t)}$ of day $t$.
 
-Figure~\ref{fig:hmm-nb-experiment} compares the performance of our hybrid HMM+NB model with with: the pick-most-common baseline, Naive Bayes with a sample prior (ratio of each word occurring in previous days), the vanilla HMM, and Naive Bayes with a uniform prior $\pi=(0.5, 0.5)$.
+Figure~\ref{fig:hmm-nb-experiment} compares the performance of our hybrid HMM+NB model with: the pick-most-common baseline, Naive Bayes with a sample prior (ratio of each word occurring in previous days), the vanilla HMM, and Naive Bayes with a uniform prior $\pi=(0.5, 0.5)$.
 The most salient result is that combining HMMs with Naive Bayes does indeed improve the performance of vanilla HMM on this dataset.
 In fact the HMM+NB performance dominates the performance of HMM on all days.
 However, we also see that Naive Bayes with a regular sample prior outperforms both, performing as well as the pick-most-common baseline.
