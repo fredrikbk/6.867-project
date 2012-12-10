@@ -278,13 +278,17 @@ In this section we seek to answer the following research questions:
 The following subsections seek to answer these questions through a series of experiments that employ our suite of classifiers and feature sets.
 In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
 Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
-Finally, in Section~\ref{predict-dj} we combine the approaches from Sections~\ref{wsj->dj}--\ref{dj->dj} seeking the most efficient classifier for predicting the Dow Jones.
-We then analyze whether we can make money this way and hence whether this is a worthwhile pursuit. 
+We address question 3 in both Section~\ref{wsj->dj} and Section~\ref{dj->dj} in terms of their respective models.
+In both sections we analyze whether we can make money this way and hence whether this is a worthwhile pursuit.
 Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: Happyface. Or not: Sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
 \label{wsj->dj}
+
+\TODO{Chris: Use the models from section 4.1 to predict December. Add a section at the end for this}
+\TODO{Add two sentences about the baseline at the beginning.}
+\TODO{Rephrase hypothesis in terms of research question 3. 1 is predicting at all. 3 is predicting in such a way as to make money.}
 
 The first question we wish to answer is whether we can find correlations between words in the Wall Street Journal and the Dow Jones, and use these correlations to classify days as ``up days'' or ``down days.'' We use several different feature vectors under each of our non-sequential models to test two hypotheses. First, we test that we can use some features of the data set to classify each day with a high degree of accuracy. Second, we test that can use feature vectors derived from days occuring before a given day to classify that day and therefore predict the direction of the stock market.
 
@@ -356,7 +360,9 @@ From our results with these algorithms, we have strong evidence to support the h
 \subsection{Predicting the Dow Jones based on past trends}
 \label{dj->dj}
 
-In this section we look at predicting the performance of the Dow Jones based on past trends.
+\TODO{Fred: Add a discussion about making money to answer Q3}.
+
+In this section we look at predicting the performance of the Dow Jones based on past trends to answer research question 2.
 That is, at time $t$ we make predictions purely based on the previously observed performance of the Dow Jones, represented by the sequence $(Y^{(1)}, ..., Y^{(t-1)})$, and do not take Wall Street Journal articles into account.
 
 As described in Section~\ref{sec:sequential-models} we have two sequential classifier.
@@ -410,7 +416,6 @@ However, for early predictions the Markov Model has not yet become convinced tha
 \label{fig:mm-experiment}
 \end{figure*}
 
-
 \subsubsection{Hidden Markov Models}
 \label{hmm-eval}
 
@@ -426,7 +431,6 @@ As we can see the Dow Jones follow a clear up-trend in the beginning of the year
 The HMM therefore has few opportunities to get leverage on the baseline.
 However, one such opportunity appears just before day 100. Here we can see that the Dow Jones falls for several days. This naturally causes the baseline's accuracy to fall, while the HMM is able to address the trend and reverse course to predicting negative days.
 
-
 \begin{figure*}
 \center
 \hspace{0.5cm}
@@ -436,21 +440,7 @@ However, one such opportunity appears just before day 100. Here we can see that 
 \end{figure*}
 
 
-\subsubsection{Conclusions}
-
-Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy. Another reason is that the Dow Jones this year is very volatile and the only very significant long-term trends are positive. The heuristic naturally catches these trends, while the (Hidden) Markov Models have very few significant downward trends to use to get leverage over the baseline.
-
-However, it is probably still better to use (Hidden) Markov Models for predicting the Dow Jones, since they will be much better able adapt to changing circumstances.
-One obvious example of this would be 2008, where the US was in a severe recession and the Dow Jones fell drastically.
-Here it would take a lot of time for the pick-most-common heuristics to change its mind, while especially the Hidden Markov Models would be able to turn around fast.
-
-Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
-This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
-
-
-\subsection{Predicting the future performance of the Dow Jones}
-\label{predict-dj}
-
+\subsubsection{Hidden Markov Models as priors to Naive Bayes}
 
 \begin{figure*}
 \center
@@ -466,6 +456,19 @@ Figure~\ref{fig:hmm-nb-experiment}
 
 
 Two ideas for hmm-nb: normalize hmm posteriors/nb priors towards 0.5 to make them less dominant in nb, or run hmm with a relatively small window to make hmm less certain. This would give the weak signal from naive bayes a chance to win through.
+
+
+\subsubsection{Conclusions}
+
+Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy. Another reason is that the Dow Jones this year is very volatile and the only very significant long-term trends are positive. The heuristic naturally catches these trends, while the (Hidden) Markov Models have very few significant downward trends to use to get leverage over the baseline.
+
+However, it is probably still better to use (Hidden) Markov Models for predicting the Dow Jones, since they will be much better able adapt to changing circumstances.
+One obvious example of this would be 2008, where the US was in a severe recession and the Dow Jones fell drastically.
+Here it would take a lot of time for the pick-most-common heuristics to change its mind, while especially the Hidden Markov Models would be able to turn around fast.
+
+Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
+This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
+
 
 
 \section{Conclusions}
