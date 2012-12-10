@@ -25,43 +25,43 @@
 
 \begin{abstract}
 Predicting the performance of Stock Market Indexes such as the Dow Jones Industrial Average (DJI) is important for any investor, whether she is private or the manager of a pension fund.
-A plethora of data sources are available that contain information important that may indicate which way the stock market will move and the human investor quickly becomes overwhelmed. A few examples of such data sources are newspapers, twitter, past performance and job reports.
+A plethora of data sources are available that contain information that may indicate which way the stock market will move and the human investor quickly becomes overwhelmed. A few examples of such data sources are newspapers, twitter, past performance, and job reports.
 
 In this paper we investigate whether we can use computers to predict the up or down movement of the Dow Jones based two factors: (i) articles of the Wall Street Journal (WSJ) and (ii) past Dow Jones performance.
 To this end we have implemented a suite of Machine Learning classifiers with complementary features that we believe may expose market trends.
 We combine these with feature and topic modeling techniques to explore various approaches to predicting the Dow Jones.
 
 We find that we correctly classify the movement of the Dow Jones with 83.4\% accuracy based on the next days article of the Wall Street Journal using AdaBoost, which is strong evidence that a correlation between the two exist and that it can be detected using algorithmic approaches.
-Using Naive Bayes we achieve an accuracy of 53.84\% in predicting todays movement of the DJI based on this mornings article of the WSJ in cross validation and $57.26\%$ accuracy in an online setting.
+Using Naive Bayes we achieve an accuracy of 53.84\% in predicting todays movement of the DJI based on this morning's article of the WSJ in cross validation and $57.26\%$ accuracy in an online setting.
 This demonstrates that the correlation between the two may actually be used to make money.
-Finally, using Hidden Markov Models to model todays performance based on previous performance, combined with Naive Bayes to incorporate todays issue of the WSJ we achieve an accuracy of 55.7\% in an online setting.
+Finally, using Hidden Markov Models to model todays performance based on previous performance, combined with Naive Bayes to incorporate todays issue of the WSJ, we achieve an accuracy of 55.7\% in an online setting.
 This demonstrates that in a real world setting it may be possible to make money using our techniques.
 \end{abstract}
 
 \section{Introduction}
 
-With the low bank deposit and bond interests over the let two decades stock market investment has become the method of choice for individuals seeking to save for the future.
+With low bank deposit and bond interest rates over the last two decades stock market investment has become the method of choice for individuals seeking to save for the future.
 However, stock markets are volatile and risky and predicting the performance of Stock Market Indexes such as the Dow Jones is important for any investor whether she is private or the manager of a fund such as a pension fund.
-A plethora of data sources are available that contain information important that may indicate which way the stock market will move.
+A plethora of data sources are available that contain information that may indicate which way the stock market will move.
 These include, but are far from limited to, newspapers, past performance, reports such as government job reports and even Twitter~\cite{twitter}.
-Stock markets very quickly incorporates this information and a private individual investor without the manpower of a large investment bank quickly becomes overwhelmed.
+Stock markets very quickly incorporate this information and a private individual investor without the manpower of a large investment bank quickly becomes overwhelmed.
 
 In this paper we investigate whether we can use computers to predict the up and down movements of the Dow Jones based two factors: (i) articles of the Wall Street Journal (WSJ) and (ii) past Dow Jones performance.
 We also explore whether these data source can be combined to yield even better results.
 
-To investigate whether such predictions can be made we have implemented several Machine Learning classifiers that we believe have features that may expose market trends. Some, such as Naive Bayes and AdaBoost can be used directly to predict DJI movements based on articles of the Wall Street Journal. Others, like Kernel SVMs and Neighbor Nearest methods are infeasible or ineffective on such a large textual corpus, due to the high dimensionality of the word vectors, and therefore require dimensionality reduction.
+To investigate whether such predictions can be made we have implemented several Machine Learning classifiers using features that we believe may expose market trends. Some, such as Naive Bayes and AdaBoost can be used directly to predict DJI movements based on articles of the Wall Street Journal. Others, like Kernel SVMs and Neighbor Nearest methods are infeasible or ineffective on such a large textual corpus, due to the high dimensionality of the word vectors, and therefore require dimensionality reduction.
 Others still, such as Markov Models and Hidden Markov Models are sequential and can be used to predict DJI performance based on previous performance.
 
 The contributions of this paper are:
 \begin{description}
 \item[Feature Modeling] Several different methods for feature extraction from Wall Street Journal articles.
-\item[Classifiers] A suite of six different classifiers that work on bag of words, reduced features or temporal data.
+\item[Classifiers] A suite of six different classifiers that work on bag of words, reduced features, or temporal data.
 \item[Evaluation] An evaluation of the six classifiers, using several feature modeling techniques, and one combination of two classifiers, on DJI performance and WSJ articles from 2007.
 \end{description}
 
 \begin{figure}
 \includegraphics[width=8.5cm]{experiments/dj_performance.pdf}
-\caption{Dow Jones movement from January 1 to December 31 2007. The Y axis shows cumulative movement since January 1.}
+\caption{Dow Jones movement from January 1 to December 31 2007. The Y axis shows cumulative movement since January 1}
 \label{fig:dj-preformance}
 \end{figure}
 
@@ -69,9 +69,9 @@ The contributions of this paper are:
 
 Predicting stocks is a very attractive topic for many people due to the possibility of making a profit, and due to this there is an abundance of previous work.
 
-There are hypothesis about markets which imply that prediction is difficult or impossible~\cite{mlstockmarket}. The main one is the Random Walk Hypothesis, which states that stock prices do not depend on previous results (essentially the movement of prices overtime is a ``random walk'' moving up or down). Obviously under this assumption predicting stocks is impossible, but this assumption turns out to be an oversimplification of the market. The Efficient Market Hypothesis is similar, stating that future stock prices cannot be predicted by the past trading history, due to prices being influenced by information efficiently. Again, this assumption can make prediction impossible, but in analyzing newspaper articles for stock predictions we can possibly find some latent influences that the market did not yet incorporate.
+There are hypotheses about markets which imply that prediction is difficult or impossible~\cite{mlstockmarket}. The main one is the Random Walk Hypothesis, which states that stock prices do not depend on previous results (essentially the movement of prices over time is a ``random walk'' moving up or down). Under this assumption, predicting stocks is impossible, but this assumption turns out to be an oversimplification of the market. The Efficient Market Hypothesis is similar, stating that future stock prices cannot be predicted by the past trading history due to prices being influenced by information efficiently. Again, this assumption can make prediction impossible, but in analyzing newspaper articles for stock predictions we can possibly find some latent influences that the market did not yet incorporate.
 
-The most common technique seems to be predicting the market through the use of technical indicators such as Simple Moving Averages, which is the technique recommended by several investing sites including~\cite{techindicator}. This is known as technical analysis, which differs from fundamental analysis in that the latter is concerned with making expert decisions based in information about specific companies~\cite{mlstockmarket} rather than predicting trends directly. Dimensionality reduction techniques such as Principle Components Analysis (similar to Latent Semantic Indexing~\cite{lsi}, which we use) have been applied to these indicators to come up with predictors in the past~\cite{techdim}. Prediction based on machine learning techniques are also quite common, including other works that use newspaper articles to predict specific stocks~\cite{mlstockmarket}. We focus on using newspapers to predict the behavior of the market as a whole. Correlations between other textual data and the market have been exploited in the past, including using Twitter trends to predict the stock market~\cite{twitter}.
+The most common technique seems to be predicting the market through the use of technical indicators such as Simple Moving Averages, which is the technique recommended by several investing sites~\cite{techindicator}. This is known as technical analysis, which differs from fundamental analysis in that the latter is concerned with making expert decisions based in information about specific companies rather than predicting trends directly~\cite{mlstockmarket}. Dimensionality reduction techniques such as Principle Components Analysis (similar to Latent Semantic Indexing~\cite{lsi}, which we use) have been applied to these indicators to come up with predictors in the past~\cite{techdim}. Prediction based on machine learning techniques are also quite common, including other works that use newspaper articles to predict specific stocks~\cite{mlstockmarket}. We focus on using newspapers to predict the behavior of the market as a whole. Correlations between other textual data and the market have been exploited in the past, including using Twitter trends to predict the stock market~\cite{twitter}.
 
 % Add the following paragraphs:
 % - Prior work on stock market preditictions
@@ -84,7 +84,7 @@ The most common technique seems to be predicting the market through the use of t
 
 Our data set consists of 36,466 Wall Street Journal (WSJ) articles over 359 days, and 251 days of closing price information of the Dow Jones Industrial Average (DJI) for the year 2007. The stock market is closed on weekends and holidays, which is why there are fewer days of stock data than newspaper articles. There are two days for which we have stock data but no newspaper articles (December 18th and 27th), but this appears to be an omission in the provided data set. We consider only days for which we have both WSJ and DJI data. We simplify our data set by omitting data from weekends, which makes our data set easier to work with at the cost of losing some information.
 
-We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with numbers of articles around either 125 or 15 per day. Some days have fewer articles, which may decrease their effectiveness for classification. In Section~\ref{sec:bagsofwords} we mention some strategies used to scale the counts so that effects of this difference may be reduced.
+We have approximately 101 articles per day on average. A histogram of articles per day appears in Figure~\ref{articlehist}. The distribution appears to be bimodal, with article counts around either 125 or 15 per day. Some days have fewer articles, which may decrease their effectiveness for classification. In Section~\ref{sec:bagsofwords} we mention some strategies used to scale the counts so that effects of this difference may be reduced.
 
 \begin{figure}
 \centering
@@ -106,14 +106,13 @@ Our data set consists of over 24 million words, with an average of 667 words per
 
 The data set contains 150,875 unique words. Each data point we use for training and validation therefore consists of a class label (+1 if the market went up which we call an ``up day'', and -1 if it went down which we call a ``down day'') and a feature vector computed using frequencies of these unique words.
 
-Due to the difficulty of computation on the number of unique words that we have, we filter the words in several ways to reduce the noise of the data set. First, we strip all non-alphabetic characters from all words and filter out any words less than length 2. We then filter out any words that did not appear more than some cutoff, $m$, throughout the year. We assume that these words are either misspellings or words which would not generally be useful in predicting stock performance due to their infrequency. Filtering with $m = 10$ results in 44,218 unique words and was found to be a good balance between information and computational tractability.
-Finally, we filtered out any of the 100 most commonly used English words~\footnote{http://en.wikipedia.org/wiki/Most\_common\_words\_in\_English}, since we
-assume that words such as ``and'' and ``I'' do not provide very much information.
+Due to the difficulty of computation on the number of unique words that we have, we filter the words in several ways to reduce the noise of the data set. Our unique words are a result of stripping all non-alphabetic characters from all words and filter out any words less than length 2. We then filter out any words that did not appear more than some cutoff, $m$, throughout the year. We assume that these words are either misspellings or words which would not generally be useful in predicting stock performance due to their infrequency. We filtered out any of the 100 most commonly used English words~\footnote{http://en.wikipedia.org/wiki/Most\_common\_words\_in\_English}, since we
+assume that words such as ``and'' and ``I'' do not provide very much information. Filtering with $m = 10$ results in 44,218 unique words and was found to be a good balance between information and computational tractability.
 
 We use several feature extraction techniques to construct the feature matrix $X$ as a function of the input data $X'$. Each row of $X$ is the feature for a corresponding day, and each column of $X$
 contains the values for one feature across all days. The column-vector $Y$ contains the output values (+1 or -1). 
 
-The rest of this section describes several feature extraction techniques we used and the representation of the feature matrix $F$.  These features are compared using several machine learning algorithms presented in Section~\ref{sec:techniques}.
+The rest of this section describes several feature extraction techniques we used and the representation of the feature matrix $X'$.  These features are compared using several machine learning algorithms presented in Section~\ref{sec:techniques}.
 
 We will introduce the following terminology to describe the feature matrix and its elements:
 
@@ -131,7 +130,7 @@ We will introduce the following terminology to describe the feature matrix and i
 \subsection{Bag of Words and Phrases}
 \label{sec:bagsofwords}
 
-The simplest feature vector is simply a ``bag of words'' for each day~\cite{featurehash}, which consists of frequency counts of all words in articles published on that day. The feature vector is simply $\displaystyle X = X'$ These feature vectors are extremely sparse, since most articles do not use tens of thousands of unique words (we represent our data set as a sparse matrix
+The simplest feature vector is simply a ``bag of words'' for each day~\cite{featurehash}, which consists of frequency counts of all words in articles published on that day. The feature matrix is simply $\displaystyle X = X'$ These feature vectors are extremely sparse, since most articles do not use tens of thousands of unique words (we represent our data set as a sparse matrix
 in MATLAB to reduce memory consumption to reasonable levels).
 
 An obvious weakness of this technique is that it takes words out of context. Phrases such as ``stocks went up'' simply increase the counts of the three words independently. We augmented this technique by creating ``bags of phrases'' as well. In addition to counts of words, we keep counts of two and three word phrases
@@ -156,13 +155,13 @@ The second method we consider, which we call \textit{temporal memory}, addresses
 
 The feature vectors previously described in this section are all very high-dimensional, containing either tens- or hundreds-of-thousands of word frequencies. This is problematic for several learning algorithms we applied, including SVMs and K-Nearest-Neighbor. We use dimensionality reduction and topic modeling techniques to reduce the dimensionality of the feature vectors while retaining important semantic information.
 
-The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The input to LSI is a term-document matrix, a matrix in which each row represents frequencies for a given term across all documents, and each column represents frequencies of each term within a document. The element at row $t$ and column $d$ is the frequency of term $t$ in document $d$ (this is the transpose of our bag of words feature matrix $X'$, viewing each day as a ``document''). LSI requires finding the Singular Value Decompositon (SVD) of this term-document matrix. If $X$ is our $t \times d$ term-document matrix, then the SVD of $X$ are the unique matrices $T, S, \text{ and } D$, such that $T$ is $t \times m$, S is diagonal $m \times m$, $D$ is $d \times m$ and $X = T S D'$, where $D'$ is the transpose of $D$. By the definition of SVD, the columns of $T$ are eigenvectors of $X X'$, the rows of $D$ are the eigenvectors of $X' X$, and $S$ is a diagonal matrix of the square roots of the eigenvalues for both. The fundamental insight used by LSI is that zeroing out all but the $r$ largest eigenvectors in $S$ results in a new matrix $\hat{X}$ which is the closest matrix of rank $r$ to the original $X$ by least-squares~\cite{lsi}. Zeroing out those elements also means we need to retain only $r$ columns of $T$ and $D$ to construct the new matrix, so we have greatly reduced the number of columns we must retain for $r << m$. This result is called the rank-reduced SVD. The $r$ columns of $D$ corresponding to the $r$ largest eigenvalues represent each document with only $r$ features, multiplying by $S$ scales this new vector space appropriately, so we use $S D'$ as our data matrix which is $d \times r$ with similarity between vectors representing similarity between semantic information in the original input space. The LSI paper recommends finding similarity by cosine of the angle between vectors, and we compared results using angle and Euclidean distance. New input vectors are projected into this new space through a method described in~\cite{lsi}.
+The primary technique we use is Latent Semantic Indexing~(LSI)~\cite{lsi}. The input to LSI is a term-document matrix, a matrix in which each row represents frequencies for a given term across all documents, and each column represents frequencies of each term within a document. The element at row $t$ and column $d$ is the frequency of term $t$ in document $d$ (this is the transpose of our bag of words feature matrix $X'$, viewing each day as a ``document''). LSI requires finding the Singular Value Decompositon (SVD) of this term-document matrix. If $X$ is our $t \times d$ term-document matrix, then the SVD of $X$ are the unique matrices $T, S, \text{ and } D$, such that $T$ is $t \times m$, S is diagonal $m \times m$, $D$ is $d \times m$ and $X = T S D'$, where $D'$ is the transpose of $D$. By the definition of SVD, the columns of $T$ are eigenvectors of $X X'$, the rows of $D$ are the eigenvectors of $X' X$, and $S$ is a diagonal matrix of the square roots of the eigenvalues for both. The fundamental insight used by LSI is that zeroing out all but the $r$ largest eigenvectors in $S$ results in a new matrix $\hat{X}$ which is the closest matrix of rank $r$ to the original $X$ by least-squares~\cite{lsi}. Zeroing out those elements also means we need to retain only $r$ columns of $T$ and $D$ to construct the new matrix, so we have greatly reduced the number of columns we must retain for $r << m$. This result is called the rank-reduced SVD. The $r$ columns of $D$ corresponding to the $r$ largest eigenvalues represent each document with only $r$ features, multiplying by $S$ scales this new vector space appropriately, so we use $D S$ as our data matrix which is $d \times r$ with similarity between vectors representing similarity between semantic information in the original input space. The LSI paper recommends finding similarity by cosine of the angle between vectors, and we compared results using angle and Euclidean distance. New input vectors are projected into this new space through a method described in~\cite{lsi}.
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.4]{plots/lsiorig.pdf}
-\caption{Feature space from 2D LSI on the original bag of words}
+\caption{Feature space from 2D LSI on the original bag of words. X and Y axes are unlabeled because they have no plain-English meaning}
 \label{lsiorig}
 \end{figure}
 
@@ -213,10 +212,10 @@ LSI clusters documents by projecting them to a lower-dimensional space and using
 \label{sec:techniques}
 
 In this section we describe the different classifiers we developed for this project.
-For each classifiers we describe our implementation choices and what, if any, third-party libraries we used.
+For each classifier we describe our implementation choices and what, if any, third-party libraries we used.
 We implemented all of our classifiers as MATLAB functions.
 
-Our classifiers can roughly be divided into four categories. The first are simple prediction rules. These are mostly included to demonstrate features of our data and to serve as baselines for the other classifiers. The next class include classifiers that do not have a probabilistic model. These include AdaBoost, Nearest Neighbor and SVM~\cite{bishop2006pattern}. The third class consist of classifiers based on probabilistic models. The only classifiers we implemented in this category is Naive Bayes. The fourth and final class of classifiers is sequential models and include M-order Markov Models, Hidden Markov Models, and a combination of Hidden Markov Models and Naive Bayes.
+Our classifiers can roughly be divided into four categories. The first are simple prediction rules. These are mostly included to demonstrate features of our data and to serve as baselines for the other classifiers. The next class include classifiers that do not have a probabilistic model. These include AdaBoost, Nearest Neighbor and SVM~\cite{bishop2006pattern}. The third class consists of classifiers based on probabilistic models. The only classifiers we implemented in this category is Naive Bayes. The fourth and final class of classifiers is sequential models and include M-order Markov Models, Hidden Markov Models, and a combination of Hidden Markov Models and Naive Bayes.
 
 \subsection{Naive Bayes}
 \label{sec:naive-bayes}
@@ -276,20 +275,19 @@ We implemented M-order Markov Models for any value of M. However, since the numb
 
 We also implemented a classifier for the more powerful Hidden Markov Models. An HMM assumes the observed values $Y$ are generated from a sequence of hidden states $Z$.
 The evolution of the hidden states is governed by the conditional probability distribution $p(Z^{(i)}|Z^{(i-1)})$ and the values of $Y_{i}$ are governed by the conditional probability distribution $p(Y^{(i)}|Z^{(i)})$.
-%This is depicted graphically as a Bayes Net in figure~\TODO{ref}.
+
+\begin{figure}
+\center
+\includegraphics[width=6cm]{figs/hmm-predict.pdf}
+\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance}
+\label{fig:hmm-predict}
+\end{figure}
 
 The HMM classifier is trained using the values $Y^{(1)}...Y^{(t-1)}$ and then used to predict value $Y^{(t)}$.
 We used the MATLAB HMM Toolkit to learn the maximum-likelihood estimation of the model parameters A (the transition matrix) and B (the emission matrix) using the hmmtrain function, which internally uses the EM algorithm.
 We then used the function hmmdecode to generate the posterior probability on state $Z^{(t-1)}$.
 We then performed standard message passing along the chain from $Z^{(t-1)}$ to $Y^{(t)}$ to evaluate the marginal $p(Y^{(t)})$, which we used to predict $Y^{(t)}$.
-Figure~\ref{fig:hmm-predict} illustrated this model.
-
-\begin{figure}
-\center
-\includegraphics[width=6cm]{figs/hmm-predict.pdf}
-\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance.}
-\label{fig:hmm-predict}
-\end{figure}
+Figure~\ref{fig:hmm-predict} illustrates this model.
 
 In a variation on this approach we combined the Hidden Markov Model with Naive Bayes to make prediction both based on trends in the market and based on the articles in the Wall Street Journal.
 To do this we first evaluated the marginal $p(Y^{(t)})$ as described above.
@@ -300,7 +298,7 @@ This is illustrated in figure~\ref{fig:hmm-nb-predict}.
 \begin{figure}
 \center
 \includegraphics[width=6cm]{figs/hmm-nb-predict.pdf}
-\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance, combined with Naive Bayes to incorporate information in the Wall Street Journal.}
+\caption{Predicting the movement of the Dow Jones on day $t$ ($Y^{(t)}$) using a Hidden Markov Model to model trends in past performance, combined with Naive Bayes to incorporate information in the Wall Street Journal}
 \label{fig:hmm-nb-predict}
 \end{figure}
 
@@ -318,15 +316,15 @@ In Section~\ref{wsj->dj} we address Question 1 using non-sequential classifiers.
 We address Question 2 in Section~\ref{dj->dj} using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
 We address Question 3 in both Section~\ref{wsj->dj} and Section~\ref{dj->dj} in terms of their respective models.
 In both sections we analyze whether we can make money this way and hence whether this is a worthwhile pursuit.
-Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: happyface. Or not: sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: happyface. Or not: sadface}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
 \label{wsj->dj}
 
-The first question we wish to answer is whether we can find correlations between words in the Wall Street Journal and the Dow Jones, and use these correlations to classify days as ``up days'' or ``down days'' in general. We test that we can use features of the text data set to classify each day with a high degree of accuracy. To address research Question 3, we test if can use feature vectors derived from days occuring before a given day to classify that day and therefore predict the direction of the stock market.
+The first question we wish to answer is whether we can find correlations between words in the Wall Street Journal and the Dow Jones, and use these correlations to classify days as ``up days'' or ``down days'' in general. We test that we can use features of the text data set to classify each day with a high degree of accuracy. To address research question 3, we test if can use feature vectors derived from days occurring before a given day to classify that day and therefore predict the direction of the stock market.
 
-The baseline here is 57.43\%, which is validation error if we simply guess the majority from the training set for each sample. It turns out that this is very difficult to beat on our data set.
+The baseline here is 57.43\% accuracy, which is validation error if we simply guess the majority from the training set for each sample. It turns out that this is very difficult to beat on our data set.
 
 The first feature sets that we consider are bags of words (or phrases) associated with each day, and we attempt to classify the days using algorithms that work well on bags of words, namely Naive Bayes and AdaBoost. For training and verification, each day has as data a bag of words from either the previous day (yesterday), the same day (today), or the next day (tomorrow). We therefore are attempting to classify each day using the previous day's articles, the same day's articles, or the next day's articles. Obviously, classifying a day based on the next day's articles is not useful for prediction, but it does allow us to answer our first research question (if we can find any correlation between the market and the newspaper at all), since it is reasonable to believe that the newspaper on the next day would have some mention of the stock market performance. The other features test how well we can predict the market. We also include bags of words for the current day augmented with the bag of words for the previous day, by the method described in the previous section.
 
@@ -341,11 +339,11 @@ today & 52.71\% & 53.84\% \\
 today-aug & 51.46\% & 52.05\% \\
 tomorrow & 51.98\% & 58.33\% \\ \hline
 \end{tabular}
-\caption{Naive Bayes comparison on several different features vectors.}
+\caption{Naive Bayes comparison on several different features vectors}
 \label{tab:nbcompare}
 \end{table}
 
-The results from k-fold validation of Naive Bayes on these different data sets appear in Table~\ref{tab:nbcompare}. Some interesting trends appear in this data. First, the words from a given day predict that day better than articles from the previous day. This suggests that article history is not as important as we had hoped. Second, bags of phrases perform better than bags of words in all cases. The additional contextual data seems to aid prediction even though it means leaving out many words. Augmented data including the previous day did not perform as well as just using the current day's articles, but this could just be due to the increased sparsity of the data under augmentation. In terms of the third research question, we gain some information about the future of the stock market based on previous articles. The proportion of positive days is 57.43\%, so given our results the predictive power of articles may be weak. It is clear from our results that we gain some information about a day's stock price given the next day's newspaper.
+The results from k-fold validation of Naive Bayes on these different data sets appear in Table~\ref{tab:nbcompare}. Some interesting trends appear in this data. First, the articles from a given day predict that day better than articles from the previous day. This suggests that article history has diminishing returns as expected, but since the information for the current day need not be a superset of the information for the next day we may still gain from incorporating temporal features. Second, bags of phrases perform better than bags of words in all cases. The additional contextual data seems to aid prediction even though it means leaving out many words. Augmented data including the previous day did not perform as well as just using the current day's articles, but this could just be due to the increased sparsity of the data under augmentation. In terms of the third research question, we do gain some information about the future of the stock market based on previous articles. The proportion of positive days is 57.43\%, so given our results the predictive power of articles may be weak. It is clear from our results that we gain some information about a day's stock price given the next day's newspaper.
 
 \begin{table}[h]
 \centering
@@ -361,13 +359,13 @@ phrases-today    & 49.07\% & 46.16\% \\
 phrases-today-aug & 48.28\% & 49.40\% \\
 phrases-tomorrow  & 83.40\% & 77.38\% \\ \hline
 \end{tabular}
-\caption{AdaBoost comparison on several different feature vectors with different number of boosting rounds $M$.}
+\caption{AdaBoost comparison on several different feature vectors with different number of boosting rounds $M$}
 \label{tab:adacompare}
 \end{table}
 
 The results from k-fold cross validation of AdaBoost on our data appear in Table~\ref{tab:adacompare}. The most significant result shown by Table~\ref{tab:adacompare} is that bags of phrases from the next day can be used to predict the current day with a high degree of accuracy. This provides strong evidence that we can classify days based on textual analysis of the Wall Street Journal, though it is useless as a predictor of future performance. While bags of words on the next day's data performed better than other bags of words, comparing with bags of phrases shows that contextual information is essential to obtain a high degree of accuracy. Interestingly, bags of phrases made a worse predictor on past and current (today's) data than bags of words. This may be due to the increased cutoff value used to reduce the data set size, possibly losing infrequent words with good predictive power. Also interesting is that increasing the number of boosting rounds ($M$) decreases the effectiveness of the predictor in all cases except the augmented data. It is likely that increasing $M$ overfits the training data for the non-augmented features, but the augmented data has so much more information that additional boosting increases effectiveness. This supports our previous argument that augmenting the data increases its sparsity.
 
-Since we use decision stumps as weak learners for AdaBoost, we can analyze the reasons for its answers in terms of our data. Training on bags of words from the current day uncovers two relatively important stumps: ``ambitions'' and ``tundra.'' If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.  The word ``tundra'' was the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the U.S. and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones). Training on the next day's bags of words finds that ``jarring'' in tomorrow's news predicts that today goes down correctly 63.59\% of the time. This is interesting because that word could be used to refer to the market performance on the previous day. In at least one case, it is used to refer to the ``jarring reversal of recent market trends,'' which is a good feature to pick up on. For bags of phrases, the phrase ``reserve chairman ben'' in yesterday's news predicts that today goes down correctly 63.15\% of the time. Articles which mention Federal Reserve chairman Ben Bernanke say that he plans on cutting interest rates and quote him warning about a looming recession.
+Since we use decision stumps as weak learners for AdaBoost, we can analyze the reasons for its answers in terms of our data. Training on bags of words from the current day uncovers two relatively important stumps: ``ambitions'' and ``tundra.'' If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.  The word ``tundra'' was the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the U.S. and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones). Training on the next day's bags of words finds that ``jarring'' in tomorrow's news predicts that today goes down correctly 63.59\% of the time. This is interesting because that word could be used to refer to the market performance on the previous day. In at least one case, it is used to refer to the ``jarring reversal of recent market trends,'' which is a good feature to pick up on. For bags of phrases, the phrase ``reserve chairman ben'' in yesterday's news predicts that today goes down correctly 63.15\% of the time. Articles which mention Federal Reserve chairman Ben Bernanke say that he plans on cutting interest rates and quote him warning about a looming recession. Given that our AdaBoost algorithm selects phrases that are so obviously correlated with DJI movements to us as humans, it seems clear it is able to find real information.
 
 Most interesting are the phrases from tomorrow's paper which correctly classify the current day. The top phrases that indicate a drop are ``fell or points [sic],'' ``average fell,'' and ``industrials fell.'' The top phrases that indicate a rise are ``rose points'' and ``action stocks rose.'' These are clear indicators of stock performance on the previous day, and they account for the high accuracy of classification using the next day's phrases. Being unable to directly discriminate based on phrase appearances such as these may have been a weakness for Naive Bayes.
 
@@ -379,7 +377,7 @@ Next we applied LSI to the feature vectors and used our K-Nearest-Neighbors (KNN
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{plots/knn-today.pdf}
-\caption{Comparison of K-Nearest-Neighbors performance with features from rank $R$ LSI for a bag of words from the current day. Results are average verification accuracy from k-fold cross validation.}
+\caption{Comparison of K-Nearest-Neighbors performance with features from rank $R$ LSI for a bag of words from the current day. Results are average verification accuracy from k-fold cross validation}
 \label{fig:knncompare}
 \end{figure}
 
@@ -393,9 +391,11 @@ We trained a kernelized SVM with a radial basis function using several different
 \center
 \hspace{0.5cm}
 \includegraphics[width=16cm]{experiments/seq_baseline.pdf}
-\caption{Plot showing two baseline heuristics. The pick-most-common heuristic predicts the direction that was most common in earlier days, while the pick-previous heuristic just predicts the same direction as the previous day. Both heuristics are plotted with accumulative number of predictions up to that day (blue), and prediction accuracy up to that day (green).}
+\caption{Plot showing two baseline heuristics. The pick-most-common heuristic predicts the direction that was most common in earlier days, while the pick-previous heuristic just predicts the same direction as the previous day. Both heuristics are plotted with accumulative number of predictions up to that day (blue), and prediction accuracy up to that day (green)}
 \label{fig:seq-baseline}
 \end{figure*}
+
+\subsubsection{Observations}
 
 From our results with these algorithms, we have strong evidence to answer the first research question: newspaper articles can be used to classify stock market directions in general by using features that are highly dependent on the market (i.e. the articles for the day following the one we are classifying). This shows that applying machine learning techniques to just data from the Wall St. Journal can be used to learn what happened in the stock market previously.
 
@@ -439,7 +439,7 @@ Since the pick-most-common heuristic for the most part dominates the pick-previo
 \center
 \hspace{0.5cm}
 \includegraphics[width=16cm]{experiments/mm_experiment.pdf}
-\caption{Plot of one through six-order Markov Models as well as the pick-most-common baseline. All plots show the prediction accuracy up to that day.}
+\caption{Plot of one through six-order Markov Models as well as the pick-most-common baseline. All plots show the prediction accuracy up to that day}
 \label{fig:mm-experiment}
 \end{figure*}
 
@@ -459,7 +459,7 @@ However, for early predictions the Markov Models has not yet become convinced th
 \center
 \hspace{0.5cm}
 \includegraphics[width=16cm]{experiments/hmm_experiment.pdf}
-\caption{Plot showing the accuracy of the baseline heuristic and the accuracy of the Hidden Markov Model. Additionally, the performance of the Dow Jones is plotted as a stippled green graph.}
+\caption{Plot showing the accuracy of the baseline heuristic and the accuracy of the Hidden Markov Model. Additionally, the performance of the Dow Jones is plotted as a stippled green graph}
 \label{fig:hmm-experiment}
 \end{figure*}
 
@@ -467,6 +467,14 @@ As described in Section~\ref{sec:hmm} we also implemented a Hidden Markov Model 
 We ran our HMMon the whole sequence of data. For each $t$ we used all preceding observations ($Y^{(1)}$, ..., $Y^{(t-1)}$) to train our HMM and then used the HMM to predict $Y^{(t)}$.
 We found that altering the initial guesses for the transition matrix A and emission matrix B didn't impact our predictions much.
 Therefore, we in all the following we use two hidden states and initialize both A and B diagonal matrices with 0.6 on the diagonal.
+
+\begin{figure*}
+\center
+\hspace{0.5cm}
+\includegraphics[width=16cm]{experiments/hmm_nb.pdf}
+\caption{Plot showing the accuracy of the baseline, our Hidden Markov Model and our Hidden Markov Model where we use the marginal computed for $Y^{(t)}$ as the prior for Naive Bayes (see Figure~\ref{fig:hmm-nb-predict}). Additionally, the performance of the Dow Jones is plotted as a stippled green graph}
+\label{fig:hmm-nb-experiment}
+\end{figure*}
 
 Figure~\ref{fig:hmm-experiment} shows the HMM performance as a function of days.
 The HMM predictor achieved a total of 54.8\% accuracy on the whole dataset running in an online fashion, and thus also failed to beat the pick-most-common heuristic.
@@ -477,14 +485,6 @@ However, one such opportunity appears just before day 100. Here we can see that 
 As such, although the HMM is also ineffective in times of high volatility, it is much more robust to changing trends than the pick-most-common heuristic.
 
 \subsubsection{Hidden Markov Models as priors to Naive Bayes}
-
-\begin{figure*}
-\center
-\hspace{0.5cm}
-\includegraphics[width=16cm]{experiments/hmm_nb.pdf}
-\caption{Plot showing the accuracy of the baseline, our Hidden Markov Model and our Hidden Markov Model where we use the marginal computed for $Y^{(t)}$ as the prior for Naive Bayes (see Figure~\ref{fig:hmm-nb-predict}). Additionally, the performance of the Dow Jones is plotted as a stippled green graph.}
-\label{fig:hmm-nb-experiment}
-\end{figure*}
 
 The final sequential model that we will discuss here the a combination of Hidden Markov Models with Naive Bayes we described in Section~\ref{sec:hmm} and illustrated in Figure~\ref{fig:hmm-nb-predict}.
 In this model we run our Hidden Markov Model on the first $t-1$ days as before, but instead of predicting the most likely day we use the marginal probability $p(Y^{(t)})$ as a prior for Naive Bayes applied to the textual corpus $X^{(t)}$ (bag of 44,218 words with $m=10$) of day $t$.
@@ -499,7 +499,7 @@ We can verify this by observing that Naive Bayes with a uniform prior (cyan) per
 However, the fact that Naive Bayes with an uniform prior traces the pick-most-common heuristic for most of the year strongly suggests that the WSJ articles have predictive power.
 The fact that it performs poorly at the end of the year might be explained by the market volatility, which caused uncertainty in people which was then reflected in the WSJ and picked up by Naive Bayes.
 
-\subsubsection{Obsercations}
+\subsubsection{Observations}
 
 Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy. Another reason is that the Dow Jones this year is very volatile and the only very significant long-term trends are positive. The heuristic naturally catches these trends, while the (Hidden) Markov Models have very few significant downward trends to use to get leverage over the baseline.
 
@@ -510,9 +510,12 @@ Here it would take a lot of time for the pick-most-common heuristics to change i
 Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
 This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
 
+Based on the experiments in this section we can answer the second research question: past market trends can be used to predict future performance, but the predictive power is rather weak.
+As for the third research question, it does appears we can make some money based on sequential techniques, since we are able to predict DJI directions with $55.7\%$ and $57.3\%$ accuracy using HMM+Naive Bayes and Naive Bayes with sample priors respectively in an online fashion.
+
 \section{Conclusions}
 We implemented several techniques for classification and feature modeling and evaluated their performance on predicting the movement of the Dow Jones.
-Our results show suggest that using such techniques as a foundations for investing may be practical, but that they would be risky.
+Our results suggest that using such techniques as a foundation for investing may be practical, but that they would be risky.
 Although, we find it hard to beat just always predicting up for 2007, we expect the techniques we employ to generalize better and be more robust on following years. 
 
 In conclusion,  sequential machine learning techniques together with non-sequential techniques that incorporate textual data such as the Wall Street Journal seems to yield a fairly robust system for predicting stock market performance. With sufficient engineering and close supervision they may be practical for real world usage.
