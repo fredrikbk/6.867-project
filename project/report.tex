@@ -24,14 +24,14 @@
 \maketitle
 
 \begin{abstract}
-Predicting the performance of Stock Market Indexes such as the Dow Jones Industrial Average (DJ) is important for any investor, whether she is private or the manager of a fund such as a pension fund.
-A plethora of data sources are available that contain information important that may indicate which way the stock market will move and the human investor quickly becomes overwhelmed. A few examples of such data sources are newspapers, twitter, past performance and reports such as government job reports.
+Predicting the performance of Stock Market Indexes such as the Dow Jones Industrial Average (DJ) is important for any investor, whether she is private or the manager of a pension fund.
+A plethora of data sources are available that contain information important that may indicate which way the stock market will move and the human investor quickly becomes overwhelmed. A few examples of such data sources are newspapers, twitter, past performance and job reports.
 
-In this paper we investigate whether we can predict the up or down movement of the Dow Jones based two factors: (i) articles of the Wall Street Journal (WSJ) and (ii) past Dow Jones performance.
+In this paper we investigate whether we can use computers to predict the up or down movement of the Dow Jones based two factors: (i) articles of the Wall Street Journal (WSJ) and (ii) past Dow Jones performance.
 To this end we have implemented a suite of Machine Learning classifiers with complementary features that we believe may expose market trends.
 We combine these with feature and topic modeling techniques to explore various approaches to predicting the Dow Jones.
 
-We find that we can predict the movement of the Dow Jones with 83.4\% accuracy based on the next days article of the Wall Street Journal using AdaBoost, which is strong evidence that a correlation between the two exist and that it can be detected using algorithmic approaches.
+We find that we correctly classify the movement of the Dow Jones with 83.4\% accuracy based on the next days article of the Wall Street Journal using AdaBoost, which is strong evidence that a correlation between the two exist and that it can be detected using algorithmic approaches.
 Using Naive Bayes we achieve an accuracy of 53.84\% in predicting todays movement of the DJ based on this mornings article of the WSJ.
 This demonstrates that the correlation between the two may actually be used to make money.
 Finally, using Hidden Markov Models to model todays performance based on previous performance, combined with Naive Bayes to incorporate todays issue of the WSJ we achieve an accuracy of 55.7\% in an online setting.
@@ -40,11 +40,24 @@ This demonstrates that in a real world setting it may be possible to make money 
 
 \section{Introduction}
 
-Some, such as Naive Bayes and AdaBoost can be used directly to predict DJ movements based on articles of the Wall Street Journal. Others, Like Nearest  SVMs and Neighbor methods are infeasible or ineffective on such a large textual corpus, due to the high dimensionality of the word vectors (tens to hundred of thousands), and therefore require dimensionality reduction.
+With the low bank deposit and bond interests over the let two decades stock market investment has become the method of choice for individuals seeking to save for the future.
+However, stock markets are volatile and risky and predicting the performance of Stock Market Indexes such as the Dow Jones is important for any investor whether she is private or the manager of a fund such as a pension fund.
+A plethora of data sources are available that contain information important that may indicate which way the stock market will move.
+These include, but are far from limited to, newspapers, past performance, reports such as government job reports and even Twitter~\cite{twitter}.
+Stock markets very quickly incorporates this information and a private individual investor without the manpower of a large investment bank quickly becomes overwhelmed.
+
+In this paper we investigate whether we can use computers to predict the up and down movements of the Dow Jones based two factors: (i) articles of the Wall Street Journal (WSJ) and (ii) past Dow Jones performance.
+We also explore whether these data source can be combined to yield even better results.
+
+To investigate whether such predictions can be made we have implemented several Machine Learning classifiers that we believe have features that may expose market trends. Some, such as Naive Bayes and AdaBoost can be used directly to predict DJ movements based on articles of the Wall Street Journal. Others, like Kernel SVMs and Neighbor Nearest methods are infeasible or ineffective on such a large textual corpus, due to the high dimensionality of the word vectors, and therefore require dimensionality reduction.
 Others still, such as Markov Models and Hidden Markov Models are sequential and can be used to predict DJ performance based on previous performance.
 
-
-\TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
+The contributions of this paper are:
+\begin{description}
+\item[Feature Modeling] ... \TODO{Chris add this}
+\item[Classifiers] A suite of six different classifiers that work on bag of words, reduced features or temporal data.
+\item[Evaluation] An evaluation of the six classifiers, and one combination of two classifiers, on DJ performance and WSJ articles from 2007.
+\end{description}
 
 \begin{figure}
 \includegraphics[width=8.5cm]{experiments/dj_performance.pdf}
@@ -52,10 +65,12 @@ Others still, such as Markov Models and Hidden Markov Models are sequential and 
 \label{fig:dj-preformance}
 \end{figure}
 
-\TODO{Motivate the problem and explain the different market hypotheses in \cite{mlstockmarket}}
-
 \subsection{Related work}
 \cite{twitter}, \cite{mlstockmarket}
+
+\TODO{Explain the different market hypotheses in \cite{mlstockmarket}}
+
+\TODO{Chris: Can you add something here?}
 
 \section{Feature Selection}
 \label{sec:features}
