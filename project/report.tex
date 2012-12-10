@@ -94,7 +94,7 @@ We have approximately 101 articles per day on average. A histogram of articles p
 \label{articlehist}
 \end{figure}
 
-Our data set consists of over 24 million words, with an average of 667 words per article. A histogram of article lengths appears in Figure~\ref{wordshist}. Most articles tend to contain fewer than 2000 words, but there appears to be a long tail consisting of a few very long articles. For the most part it appears that article lengths are similar apart from a few outliers.
+Our data set consists of over 24 million words, with an average of 667 words per article. A histogram of article lengths appears in Figure~\ref{wordshist}. Most articles contain fewer than 2000 words, but there is a long tail consisting of a few very long articles. For the most part it appears that article lengths are similar apart from a few outliers.
 
 
 \begin{figure}
@@ -143,7 +143,7 @@ Bags of words and bags of phrases form the basis of many of our other feature se
 
 \subsection{Temporal Features}
 
-The words and phrases from previous days may have an influence on the current day's market direction by representing trends in the market~\cite{mlstockmarket}. Building a model which takes temporal information into account may use information about these trends to make better predictions. We incorporate temporal information by augmenting our data set with data from previous days and using the resulting feature vectors for training and testing.
+The words and phrases from previous days may have an influence on the current day's market direction by representing trends in the market~\cite{mlstockmarket}. Building a model which takes temporal information into account may use information about these trends to make better predictions. We incorporate temporal information into our textual data by augmenting our data set with data from previous days and using the resulting feature vectors for training and testing.
 
 The first method we consider is \textit{temporal concatenation} of our bag of words. The previous $L$ days features are concatenated on to the end of the current day's feature. That is, $X^{(d)} = X'^{(d)} \oplus X'^{(d-1)} \oplus ... \oplus X'^{(d-L)}$, where ($\oplus$) represents vector concatenation, and where days before the start of our data set are assumed to have counts $0$ for all words.
 
@@ -314,11 +314,11 @@ In this section we seek to answer the following research questions:
 \end{description}
 
 The following subsections seek to answer these questions through a series of experiments that employ our suite of classifiers and feature sets.
-In Section~\ref{wsj->dj} we address question 1 using non-sequential classifiers.
-Section~\ref{dj->dj} addresses question 2 using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
-We address question 3 in both Section~\ref{wsj->dj} and Section~\ref{dj->dj} in terms of their respective models.
+In Section~\ref{wsj->dj} we address Question 1 using non-sequential classifiers.
+We address Question 2 in Section~\ref{dj->dj} using both non-sequential classifiers with temporal features and sequential models such as Markov Models and Hidden Markov Models.
+We address Question 3 in both Section~\ref{wsj->dj} and Section~\ref{dj->dj} in terms of their respective models.
 In both sections we analyze whether we can make money this way and hence whether this is a worthwhile pursuit.
-Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: Happyface. Or not: Sadface.}.
+Along the way we use our findings to gain insight into the underlying model and our data sets, and we use these insights to guide our search for the universal Dow Jones Predictor\footnote{Also known as our tropical island retirement plan: happyface. Or not: sadface.}.
 
 
 \subsection{Predicting the Dow Jones based on the Wall Street Journal}
@@ -487,7 +487,7 @@ As such, although the HMM is also ineffective in times of high volatility, it is
 \end{figure*}
 
 The final sequential model that we will discuss here the a combination of Hidden Markov Models with Naive Bayes we described in Section~\ref{sec:hmm} and illustrated in Figure~\ref{fig:hmm-nb-predict}.
-In this model we run our Hidden Markov Model on the first $t-1$ days as before, but instead of predicting the most likely day we use the marginal probability $p(Y^{(t)})$ as a prior for Naive Bayes applied to the textual corpus $X^{(t)}$ of day $t$.
+In this model we run our Hidden Markov Model on the first $t-1$ days as before, but instead of predicting the most likely day we use the marginal probability $p(Y^{(t)})$ as a prior for Naive Bayes applied to the textual corpus $X^{(t)}$ (bag of 44,218 words with $m=10$) of day $t$.
 
 Figure~\ref{fig:hmm-nb-experiment} compares the performance of our hybrid HMM+NB model with: the pick-most-common baseline, Naive Bayes with a sample prior (ratio of each word occurring in previous days), the vanilla HMM, and Naive Bayes with a uniform prior $\pi=(0.5, 0.5)$.
 The most salient result is that combining HMMs with Naive Bayes does indeed improve the performance of vanilla HMM on this dataset.
@@ -528,6 +528,8 @@ Chris did the exploratory work on feature modeling and implemented our data cura
 Fredrik implemented most of the classifiers. These were: Naive Bayes, AdaBoost with Decision Stumps, M-Order Markov Models for any M, and Hidden Markov Models (the latter builds heavily, but not completely, on the MATLAB HMM Toolkit).
 He also implemented most of the sequential and cross-validation framework and some of the framework for evaluating NB/AdaBoost.
 He also did the evaluation and data collection for the sequential models, including the combination of Hidden Markov Models with Naive Bayes using HMM marginals as NB priors.
+
+In total we implemented about 1300 lines of MATLAB Code and 240 lines of Python code.
 
 We wrote up the report together, with each person having the main responsibility for writing up the parts he focused on. At the end we contributed to each others sections and made suggestions.
 
