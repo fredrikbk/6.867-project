@@ -76,8 +76,6 @@ set(AX(2), 'YTickLabel', {'49.6%'});
 set(L1,'LineStyle','-.')
 set(L2,'LineStyle','-.')
 
-legend(L1, 'pick-previous');
-
 
 hold;
 

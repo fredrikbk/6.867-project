@@ -46,7 +46,7 @@
 	<key>Creator</key>
 	<string>Fredrik Kjolstad</string>
 	<key>DisplayScale</key>
-	<string>1 0/72 in = 1 0/72 in</string>
+	<string>1 0/72 in = 1.0000 in</string>
 	<key>GraphDocumentVersion</key>
 	<integer>8</integer>
 	<key>GraphicsList</key>
@@ -62,7 +62,7 @@
 				<real>6</real>
 			</dict>
 			<key>ID</key>
-			<integer>15</integer>
+			<integer>22</integer>
 			<key>Points</key>
 			<array>
 				<string>{367.64705103573942, 317.29410824231223}</string>
@@ -92,7 +92,7 @@
 				<real>6</real>
 			</dict>
 			<key>ID</key>
-			<integer>14</integer>
+			<integer>21</integer>
 			<key>Points</key>
 			<array>
 				<string>{367.82352187146802, 330.58822602136757}</string>
@@ -139,7 +139,7 @@
 				<real>9</real>
 			</dict>
 			<key>ID</key>
-			<integer>13</integer>
+			<integer>20</integer>
 			<key>Shape</key>
 			<string>Rectangle</string>
 			<key>Style</key>
@@ -167,10 +167,10 @@
 				<key>Text</key>
 				<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
 \cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs18 \cf2 pick-previous}</string>
+\f0\fs18 \cf0 pick-previous}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -203,7 +203,7 @@
 				<real>9</real>
 			</dict>
 			<key>ID</key>
-			<integer>12</integer>
+			<integer>19</integer>
 			<key>Shape</key>
 			<string>Rectangle</string>
 			<key>Style</key>
@@ -231,10 +231,10 @@
 				<key>Text</key>
 				<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
 \cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
 
-\f0\fs18 \cf2 pick-most-common}</string>
+\f0\fs18 \cf0 pick-most-common}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -247,7 +247,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>11</integer>
+			<integer>18</integer>
 			<key>Shape</key>
 			<string>Rectangle</string>
 			<key>Style</key>
@@ -270,7 +270,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>9</integer>
+			<integer>17</integer>
 			<key>ImageID</key>
 			<integer>2</integer>
 			<key>Shape</key>
@@ -304,7 +304,7 @@
 	<key>HPages</key>
 	<integer>1</integer>
 	<key>ImageCounter</key>
-	<integer>3</integer>
+	<integer>4</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict/>
@@ -350,7 +350,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-12-09 22:04:46 +0000</string>
+	<string>2012-12-10 01:59:10 +0000</string>
 	<key>Modifier</key>
 	<string>Fredrik Kjolstad</string>
 	<key>NotesVisible</key>
@@ -445,7 +445,7 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{68.235292203698663, 144.70587829405059}, {502.35292708585041, 513.5293973605942}}</string>
+		<string>{{67.647056926080566, 144.70587829405059}, {502.35292708585047, 513.5293973605942}}</string>
 		<key>Zoom</key>
 		<real>1.7000000476837158</real>
 		<key>ZoomValues</key>

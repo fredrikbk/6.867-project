@@ -9,7 +9,7 @@ function [ xt1 ] = mm_predict( xt, theta)
     largest_id = 0;
     
     for i=1:2
-        if theta(mmidx([xt, i])) > largest
+        if theta(mmidx([xt, i])) >= largest
             largest = theta(mmidx([xt, i]));
             largest_id = i;
         end

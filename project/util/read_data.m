@@ -15,7 +15,7 @@ for i=1:length(labels.textdata)
     end
     if ~broken
         fprintf(2, 'No WSJ for %d\n', i);
-        labels.textdata(i)
+        labels.textdata(i);
         removelabel(end+1) = i;
     end
 end
@@ -35,8 +35,10 @@ X = sparse(words.data(indices, :));
 Y = labels.data;
 Y(removelabel, :) = [];
 
+n = length(Y);
+D = length(X(1,:));
 
-clear i j removelabel indices broken dates month;
+clear i j removelabel indices broken dates month ans;
 clear words;
 clear labels;
 clear removelabel;
