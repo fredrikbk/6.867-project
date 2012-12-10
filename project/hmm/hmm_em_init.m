@@ -1,4 +1,4 @@
-function [ A_guess, B_guess ] = em_init( num_Z, numX, Adiag, Budiag)
+function [ A_guess, B_guess ] = hmm_em_init( num_Z, numX, Adiag, Budiag)
     A_guess = zeros(num_Z);
     for i=1:num_Z
         for j=1:num_Z
