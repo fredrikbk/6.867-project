@@ -11,7 +11,7 @@
 \usepackage{amssymb}
 \usepackage[margin=0.82in]{geometry}
 
-\setcounter{secnumdepth}{2}
+%\setcounter{secnumdepth}{2}
 
 \def\TODO#1{\noindent\textbf{[TODO:} #1]}
 
@@ -224,12 +224,12 @@ Therefore, we experimented with two sequential models to attempt to predict the 
 The basic versions of these models only use the previous history of Dow Jones performance to predict future results, and ignores the issues of the Wall Street Journal.
 However, we also combined Hidden Markov models with Naive Bayes in an attempt to improve our predictions by taking more information into account.
 
-\subsubsection*{Markov Models}
+\subsubsection{Markov Models}
 \label{sec:mm}
 
 We implemented M-order Markov Models for any value of M. However, since the number of model parameters grows exponentially in M, we are restricted to relatively small values of M by computational resources.
 
-\subsubsection*{Hidden Markov Models}
+\subsubsection{Hidden Markov Models}
 \label{sec:hmm}
 
 We also implemented a classifier for the more powerful Hidden Markov Models. An HMM assumes the observed values $Y$ are generated from a sequence of hidden states $Z$.
@@ -285,15 +285,18 @@ Along the way we use our findings to gain insight into the underlying model and 
 \begin{itemize}
 \item The word ``ambitions'' is the best indicator of the Dow Jones gaining. If ``ambitions'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones went up on that day.
 \item The word ``tundra'' is the best indicator of the Dow Jones falling. If ``tundra'' appeared in the WSJ there was a 64.26\% chance that the Dow Jones fell on that day. This is because a series of articles in the WSJ where they talk about how Toyota is producing more cars outside the us and where they mention the Toyota Tundra. Another item is how Toyota is passing GM in sales (tundra is mentioned). A third item is about how Tundras had to be discounted (Toyota is on the Dow Jones).
+\end{itemize}
 
 
-\subsubsection*{Temporal Shift}
+\subsubsection{Temporal Shift}
 Temporal shifting trades information about the current day for information about the previous (or next) day.
 
 
 The bag features $B$ associate each day's price direction in $Y$ with the same day's article counts, so we are using that feature matrix to find a correlation between the direction of the stock market and the contents of newspaper articles on day $d$ (perhaps investors read the paper in the morning and that influences their trades, or some hidden ``state of the market'' influences both). It is plausible, however, that the articles on day $d-1$ are correlated with the market direction on day $d$. It is also likely that the articles on day $d+1$ are correlated with the market direction on day $d$, since they may reflect on market performance for the previous day. This is an uninteresting predictor, but it will give us some indication of how well the techniques we apply make predictions based on data that has a clear reason for being correlated.
 
 We introduce temporally shifted feature matrices to investigate these possibilities, defined by $F_{d,i} = B_{d-1,i}$ and $F_{d,i} = B_{d+1,i}$ That is, each count is replaced either by the previous day's count or the next day's count. The first and last days' counts will be 0 respectively, so this loses some information for one day each.
+
+\subsubsection{Conclusions}
 
 \subsection{Predicting the Dow Jones based on past trends}
 \label{dj->dj}
@@ -313,32 +316,54 @@ We then use the sequential classifiers to predict the maximum likelihood value o
 \center
 \hspace{0.5cm}
 \includegraphics[width=16cm]{experiments/seq_baseline.pdf}
-\caption{}
+\caption{Plot showing two baseline heuristics. The pick-most-common heuristic predicts the direction that was most common in earlier days, while the pick-previous heuristic just predicts the same direction as the previous day. Both heuristics are plotted with accumulative number of predictions up to that day (blue), and prediction accuracy up to that day (green).}
 \label{fig:seq-baseline}
 \end{figure*}
 
-We use two baselines for comparison.
+We evaluated two reasonable baselines to use for comparison.
 The first, called \emph{pick-most-common}, predicts each $Y_{(t)}$ to be the most common movement of the stock market for $(Y^{(1)}, ..., Y^{(t-1)})$.
 The second, called \emph{pick-previous}, predicts each $Y_{(t)}$ to be the same as the preceding day.
+
 Figure~\ref{fig:seq-baseline} shows the performance of the two baseline classifiers.
 Solid lines show the performance of the pick-most-common heuristic and stippled lines show the pick-previous heuristic.
-Furthermore, blue lines show the total number of correct guesses by each respective heuristic up to that day and green lines show the average prediction accuracy of each heuristic up to that day.
-Note that the classifier pick-most-common always predicts that the Dow Jones goes up since every prefix sequence of $Y$ is dominated by positive days. 
+Furthermore, blue lines show the total number of correct guesses by each respective heuristic up to that day and green lines show the prediction accuracy of each heuristic up to that day.
+
+Note that the pick-most-common classifier always predicts that the Dow Jones goes up since every prefix sequence of $Y$ is dominated by positive days. 
 Note also how both predictors perform worse at the end of the year.
 This is because the US was entering a recession and the market became both more negative, which caused the predict-most-common heuristic to do worse, and more volatile, which caused the predict-previous heuristic to do worse.
+
+Since the pick-most-common heuristic for the most part dominates the pick-previous we will only use pick-most-common as a baseline in the following.
+
 
 \subsubsection{Markov Models}
 \label{mm-eval}
 
-As described in section~\ref{sec:mm}
+As described in section~\ref{sec:mm} we implemented a M-order Markov Model for any M.
+We ran the Markov model on the whole sequence for $M=[1,10]$ ($w=M+1$), each time training a Markov Model on the first $t-1$ elements of $Y$ and using the resulting parameter $\theta$ to predict the value of $Y^{(t)}$.
+We were able to train very high order Markov Models ($M=40$) using sparse parameter matrices.
+However, for higher orders the parameter matrices is mostly empty and predictions therefore just become a tie-breaking, which is not very useful.
+Figure~\ref{fig:mm-experiment} shows the aggregate prediction ratios of the Markov Models of order 1--6, together with the predict-most-common baseline.
+
+As we can see the lower order Markov Models perform better, which is because they converge on always predicting that the Dow Jones goes up (the dominant direction). Thus they closely follow the pick-most-common heuristic once they stabilize.
+However, for early predictions the Markov Model has not yet become convinced that it should predict up. In fact, early in 2007, when there was less market volatile that later in the year, the fourth order Markov Model is able to outperform the baseline as it finds some local trends.
+
+\begin{figure*}
+\center
+\hspace{0.5cm}
+\includegraphics[width=16cm]{experiments/mm_experiment.pdf}
+\caption{Plot of one through six-order Markov Models as well as the pick-most-common baseline. All plots show the prediction accuracy up to that day.}
+\label{fig:mm-experiment}
+\end{figure*}
+
 
 \subsubsection{Hidden Markov Models}
 \label{hmm-eval}
 
+
+\subsubsection{Conclusions}
+
 \subsection{Predicting the future performance of the Dow Jones}
 \label{predict-dj}
-
-\end{itemize}
 
 \section{Future Work}
 
