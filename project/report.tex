@@ -68,6 +68,13 @@ The contributions of this paper are:
 \subsection{Related work}
 \cite{twitter}, \cite{mlstockmarket}
 
+% Add the following paragraphs:
+% - Prior work on stock market preditictions
+% - Prior work on topic modeling/feature modeling/dimensionality reduction
+
+% In the classifier section we can also cite whether classifiers come from (svm, adaboost etc).
+
+
 \TODO{Explain the different market hypotheses in \cite{mlstockmarket}}
 
 \TODO{Chris: Can you add something here?}
@@ -500,9 +507,26 @@ Here it would take a lot of time for the pick-most-common heuristics to change i
 Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
 This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
 
-
-
 \section{Conclusions}
+We implemented several techniques for classification and feature modeling and evaluated their performance on predicting the movement of the Dow Jones.
+Our results show suggest that using such techniques as a foundations for investing may be practical, but that they would be risky.
+Although, we find it hard to beat just always predicting up for 2007, we expect the techniques we employ to generalize better and be more robust on following years. 
+
+\appendix
+
+\section{Work Breakdown}
+We worked collaboratively on the project with a lot of discussion and both therefore participated in all aspects.
+However, we necessarily needed to break up the different tasks and the following describes what our work breakdown was.
+
+Chris did most of the exploratory work on feature modeling and implemented our data curators and feature generators.
+He also did most of the evaluation of the non-sequential models.
+
+Fredrik implemented all the classifiers except the Nearest Neighbor classifier and the SVM (which we reused from our previous homework assignment).
+These are: Naive Bayes, AdaBoost with Decision Stumps, M-Order Markov Models for any M, and Hidden Markov Models (the latter builds heavily, but not completely, on the MATLAB HMM Toolkit).
+He also did most of the evaluation work for the sequential models, including the combination of Hidden Markov Models with Naive Bayes using HMM marginals as NB priors.
+
+We wrote up the report together, with each person having the main responsibility for writing up the parts he focused on. 
+
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
