@@ -66,18 +66,18 @@ The contributions of this paper are:
 \end{figure}
 
 \subsection{Related work}
-\cite{twitter}, \cite{mlstockmarket}
+
+Predicting stocks is a very attractive topic for many people due to the possibility of making a profit, and due to this there is an abundance of previous work.
+
+There are two hypotheses about markets which imply that prediction is difficult~\cite{mlstockmarket}. The first is the Random Walk Hypothesis, which
+
+The most common technique seems to be predicting the market through the use of technical indicators such as Simple Moving Averages, which is the technique recommended by several investing sites including~\cite{techindicator}. This is known as technical analysis, which differs from fundamental analysis in that the latter is concerned with making expert decisions based in information about specific companies~\cite{mlstockmarket}. Dimensionality reduction techniques such as Principle Components Analysis (similar to Latent Semantic Indexing~\cite{lsi}, which we use) have been applied to these indicators to come up with predictors in the past~\cite{techdim}. Prediction based on machine learning techniques are also quite common, including other works that use newspaper articles to predict specific stocks~\cite{mlstockmarket}. We focus on using newspapers to predict the behavior of the market as a whole. Correlations between other textual data and the market have been exploited in the past, including using Twitter trends to predict the stock market~\cite{twitter}.
 
 % Add the following paragraphs:
 % - Prior work on stock market preditictions
 % - Prior work on topic modeling/feature modeling/dimensionality reduction
 
 % In the classifier section we can also cite whether classifiers come from (svm, adaboost etc).
-
-
-\TODO{Explain the different market hypotheses in \cite{mlstockmarket}}
-
-\TODO{Chris: Can you add something here?}
 
 \section{Feature Selection}
 \label{sec:features}
@@ -402,7 +402,6 @@ From our results with these algorithms, we have strong evidence to answer the fi
 For the third research question: our results show that we can obtain some information that is useful in making future predictions in the market, particularly by using Naive Bayes and AdaBoost, but the correlation is very weak as we would expect. We can predict the market with slightly greater than 50\% accuracy in validation on average, but this does not beat the baseline of simply guessing the most common direction up to that point. The difference between our methods would be more clear in years with more similar numbers of up and down days, but the market tends to trend in one direction or another over time. 
 
 KNN methods show the dimensionality reduction using LSI does provide semantic information as expected, but it is either not expressive enough or not measuring the right semantic information. It is possible that our simplifying assumption that we can take a bag of words to represent an entire day is incorrect. We may have been able to obtain better results by modeling the topics within articles directly rather than through a latent model. Our simplifying assumptions were made to improve the tractability of our algorithms on this data set, it is possible with more computational resources we could train larger models, or committees of models, which may uncover harder-to-find correlations.
-
 
 \subsection{Predicting the Dow Jones based on past trends}
 \label{dj->dj}
