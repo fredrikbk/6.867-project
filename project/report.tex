@@ -348,7 +348,7 @@ However, for higher orders the parameter matrices is mostly empty and prediction
 Figure~\ref{fig:mm-experiment} shows the aggregate prediction ratios of the Markov Models of order 1--6, together with the predict-most-common baseline.
 
 As we can see the lower order Markov Models perform better, which is because they converge on always predicting that the Dow Jones goes up (the dominant direction). Thus they closely follow the pick-most-common heuristic once they stabilize.
-However, for early predictions the Markov Model has not yet become convinced that it should predict up. In fact, early in 2007, when there was less market volatile that later in the year, the fourth order Markov Model is able to outperform the baseline as it finds some local trends.
+However, for early predictions the Markov Model has not yet become convinced that it should predict that the Dow Jones goes up. In fact, early in 2007, when there was less market volatile that later in the year, the fourth order Markov Model is able to outperform the baseline because it finds local trends.
 
 \begin{figure*}
 \center
@@ -379,16 +379,18 @@ However, one such opportunity appears just before day 100. Here we can see that 
 \center
 \hspace{0.5cm}
 \includegraphics[width=16cm]{experiments/hmm_experiment.pdf}
-\caption{Plot showing the accuracy of the baseline heuristic and the accuracy of the Hidden Markov Model. Furthermore, the performance of the Dow Jones is plotted as a stippled green graph.}
+\caption{Plot showing the accuracy of the baseline heuristic and the accuracy of the Hidden Markov Model. Additionally, the performance of the Dow Jones is plotted as a stippled green graph.}
 \label{fig:hmm-experiment}
 \end{figure*}
 
 
 \subsubsection{Conclusions}
 
-Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy.
+Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy. Another reason is that the Dow Jones this year is very volatile and the only very significant long-term trends are positive. The heuristic naturally catches these trends, while the (Hidden) Markov Models have very few significant downward trends to use to get leverage over the baseline.
 
-However, it may still be better to use (Hidden) Markov Models in general since they will be able to better adapt to changing circumstances. On example of this would be 2008 where the US was in a severe recession and the Dow Jones fell drastically. Here it would take a lot of time for the pick-most-common heuristics to change its mind, while especially Hidden Markov Models would be able to turn around relatively fast.
+However, it is probably still better to use (Hidden) Markov Models for predicting the Dow Jones, since they will be much better able adapt to changing circumstances.
+One obvious example of this would be 2008, where the US was in a severe recession and the Dow Jones fell drastically.
+Here it would take a lot of time for the pick-most-common heuristics to change its mind, while especially the Hidden Markov Models would be able to turn around fast.
 
 Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
 This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
@@ -397,7 +399,24 @@ This also helps explain why (Hidden) Markov Models, which are based on finding t
 \subsection{Predicting the future performance of the Dow Jones}
 \label{predict-dj}
 
-\section{Future Work}
+
+\begin{figure*}
+\center
+\hspace{0.5cm}
+\includegraphics[width=16cm]{experiments/hmm_nb.pdf}
+\caption{Plot showing the accuracy of the baseline, our Hidden Markov Model and our Hidden Markov Model where we use the marginal computed for $Y^{(t)}$ as the prior for Naive Bayes (see Figure~\ref{fig:hmm-nb-predict}). Additionally, the performance of the Dow Jones is plotted as a stippled green graph.}
+\label{fig:hmm-nb-experiment}
+\end{figure*}
+
+...
+
+Figure~\ref{fig:hmm-nb-experiment}
+
+
+Two ideas for hmm-nb: normalize hmm posteriors/nb priors towards 0.5 to make them less dominant in nb, or run hmm with a relatively small window to make hmm less certain. This would give the weak signal from naive bayes a chance to win through.
+
+
+\section{Conclusions}
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
