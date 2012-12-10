@@ -28,10 +28,13 @@
 
 \section{Introduction}
 
-
-
-
 \TODO{Describe how we took an exploratory approach with made us end up with many classifiers. That is, we tried simple classifiers first and moved on to more sophisticated classifiers when we were not happy with our results.}
+
+\begin{figure}
+\includegraphics[width=8.5cm]{experiments/dj_performance.pdf}
+\caption{Dow Jones movement from January 1 to December 31 2007. The Y axis shows cumulative movement since January 1. We make the simplifying assumption that the Dow Jones moves a unit distance up or down on any day, which makes this a graph of Dow Jones performance in 2007.}
+\label{fig:dj-preformance}
+\end{figure}
 
 \TODO{Motivate the problem and explain the different market hypotheses in \cite{mlstockmarket}}
 
@@ -347,6 +350,7 @@ Figure~\ref{fig:mm-experiment} shows the aggregate prediction ratios of the Mark
 As we can see the lower order Markov Models perform better, which is because they converge on always predicting that the Dow Jones goes up (the dominant direction). Thus they closely follow the pick-most-common heuristic once they stabilize.
 However, for early predictions the Markov Model has not yet become convinced that it should predict up. In fact, early in 2007, when there was less market volatile that later in the year, the fourth order Markov Model is able to outperform the baseline as it finds some local trends.
 
+
 \begin{figure*}
 \center
 \hspace{0.5cm}
@@ -361,6 +365,14 @@ However, for early predictions the Markov Model has not yet become convinced tha
 
 
 \subsubsection{Conclusions}
+
+Generally, we see that Markov Models and Hidden Markov Models perform worse than the simple pick-most-common heuristics for 2007. This is because that heuristic is pretty good for this year, with 57.4\% accuracy.
+
+However, it may still be better to use (Hidden) Markov Models in general since they will be able to better adapt to changing circumstances. On example of this would be 2008 where the US was in a severe recession and the Dow Jones fell drastically. Here it would take a lot of time for the pick-most-common heuristics to change its mind, while especially Hidden Markov Models would be able to turn around relatively fast.
+
+Finally, 2007 was a year with a lot of volatility since the US was moving into a recession.
+This also helps explain why (Hidden) Markov Models, which are based on finding trends and patterns (especially local ones) in data were less effective than simple heuristics.
+
 
 \subsection{Predicting the future performance of the Dow Jones}
 \label{predict-dj}
