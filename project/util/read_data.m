@@ -35,8 +35,10 @@ X = sparse(words.data(indices, :));
 Y = labels.data;
 Y(removelabel, :) = [];
 
+n = length(Y);
+D = length(X(1,:));
 
-clear i j removelabel indices broken dates month;
+clear i j removelabel indices broken dates month ans;
 clear words;
 clear labels;
 clear removelabel;
