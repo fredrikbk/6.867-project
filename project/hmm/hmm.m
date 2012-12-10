@@ -4,7 +4,7 @@ E = Y';
 NUM_EMISSION_STATES = 2;
 NUM_HIDDEN_STATES   = 2;
 
-% Normalize Z to {1,2}
+% Normalize E to {1,2}
 for i=1:length(E)
     E(i) = (E(i)+3)/2;
 end
@@ -12,7 +12,7 @@ end
 % Create initial guesses for the EM algorithm
 Adiag  = 0.6;  % rand(1)/2 + 1/2;
 Budiag = 0.6;  % rand(1)/2 + 1/2;
-[A_guess, B_guess] = em_init(NUM_HIDDEN_STATES, NUM_EMISSION_STATES, Adiag, Budiag);
+[A_guess, B_guess] = hmm_em_init(NUM_HIDDEN_STATES, NUM_EMISSION_STATES, Adiag, Budiag);
 
 % Test and validate
 predictions = length(E);
@@ -27,7 +27,7 @@ for i=window+1:length(E)-1
     % Compute the posterior probabilities on Z for E(1:i)
     pr_Z = hmmdecode(E(i-window:i),A,B)';
     
-    pr_zi   = pr_Z(length(pr_Z),:); 
+    pr_zi   = pr_Z(end,:); 
     pr_zip1 = pr_zi * A;
     pr_xip1 = pr_zip1 * B
 

@@ -1,7 +1,7 @@
 function [ pmc_cum, pmc_ratio  ] = sequential_pmc( Y )
 % Pick most common
     n = length(Y);
-    w = 37;
+    w = 2;
     
     Yn = Y;
     for i=1:length(Yn)
