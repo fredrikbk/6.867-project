@@ -1,13 +1,8 @@
-maxM = 50;
+maxM = 6;
 
 w = maxM+1;
 
 n = length(Y);
-Yn = Y;
-% Normalize Yn to {1,2}
-for i=1:length(Yn)
-    Yn(i) = (Yn(i)+3)/2;
-end
 pmm = zeros(n,maxM);
 pmm_cum = zeros(n, maxM);
 pmm_ratio = zeros(n, maxM);
@@ -26,8 +21,6 @@ for M=1:maxM
     
     toc
 end
-
-return
 
 [pmc_cum, pmc_ratio] = sequential_pmc(Y);
 
